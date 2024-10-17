@@ -1,0 +1,66 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Roboto";
+  src: url("../assets/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+:root {
+  --primary-color: #553311; /* not definitive */
+  --secondary-color: #996633; /* not definitive */
+  --background-color: #ffeead; /* not definitive */
+  --text-color: #332211; /* not definitive */
+  --font-family: "Roboto", sans-serif; /* not definitive */
+  --font-size: 16px;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  margin: 0;
+  padding: 0 14rem;
+  letter-spacing: 0.03em;
+  word-spacing: 0.1em;
+  line-height: 1.6;
+}
+
+.btn-primary,
+.btn-secondary {
+  color: var(--background-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+  padding: 0.8rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+}
+
+.btn-secondary {
+  background-color: var(--secondary-color);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: scale(1.04);
+  transition: transform 0.07s ease;
+}
+
+.btn-primary:active,
+.btn-secondary:active {
+  transform: scale(0.96);
+  transition: transform 0.07s ease;
+}
