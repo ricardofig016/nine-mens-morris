@@ -34,6 +34,9 @@ body {
   letter-spacing: 0.03em;
   word-spacing: 0.1em;
   line-height: 1.6;
+  background-image: url('../assets/Background.png');
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 header {
@@ -47,6 +50,10 @@ header {
 
 section{
   padding: 0 5rem;
+  text-align: center;
+  margin: auto;
+  align-content: center;
+  justify-content: center;
 }
 
 nav ul {
@@ -66,6 +73,40 @@ nav ul li a:hover {
   transform: scale(0.95);
   transition: transform 0.07s ease;
 }
+
+.active {
+  background-color: var(--secondary-color) !important;
+}
+
+footer {
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+}
+
+footer .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-bottom {
+  margin-top: 20px;
+  padding-top: 10px;
+  width: 100%;
+  max-width: 100%;
+  font-size: 14px;
+}
+
+.footer-bottom p {
+  margin: 0;
+  color: var(--primary-color);
+}
+
 
 .btn-primary,
 .btn-secondary {
@@ -103,6 +144,7 @@ nav ul li a:hover {
 .container {
   max-width: 100%;
   margin: auto;
+  text-align: center;
   padding: 0 20px;
   display: flex;
   justify-content: space-between;
