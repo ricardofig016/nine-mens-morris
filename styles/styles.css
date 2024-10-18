@@ -54,6 +54,7 @@ section{
   margin: auto;
   align-content: center;
   justify-content: center;
+  margin-top: 12rem !important;
 }
 
 nav ul {
@@ -75,7 +76,9 @@ nav ul li a:hover {
 }
 
 .active {
-  background-color: var(--secondary-color) !important;
+  background-color: var(--background-color) !important;
+  color:  var(--text-color) !important;
+  border: 2px solid var(--secondary-color) !important;
 }
 
 footer {
