@@ -13,11 +13,11 @@
 }
 
 :root {
-  --primary-color: #553311; /* not definitive */
-  --secondary-color: #996633; /* not definitive */
-  --background-color: #ffeead; /* not definitive */
-  --text-color: #332211; /* not definitive */
-  --font-family: "Roboto", sans-serif; /* not definitive */
+  --primary-color: #553311;
+  --secondary-color: #996633;
+  --background-color: #ffeead;
+  --text-color: #332211;
+  --font-family: "Roboto", sans-serif;
   --font-size: 16px;
 }
 
@@ -34,7 +34,7 @@ body {
   letter-spacing: 0.03em;
   word-spacing: 0.1em;
   line-height: 1.6;
-  background-image: url('../assets/Background.png');
+  background-image: url("../assets/Background.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -48,7 +48,7 @@ header {
   width: 100%;
 }
 
-section{
+section {
   padding: 0 5rem;
   text-align: center;
   margin: auto;
@@ -73,11 +73,6 @@ nav ul li a {
 nav ul li a:hover {
   transform: scale(0.95);
   transition: transform 0.07s ease;
-}
-
-.active {
-  background-color: var(--background-color) !important;
-  color:  var(--text-color) !important;
 }
 
 footer {
@@ -109,7 +104,6 @@ footer .container {
   color: var(--primary-color);
 }
 
-
 .btn-primary,
 .btn-secondary {
   color: var(--background-color);
@@ -130,15 +124,29 @@ footer .container {
   background-color: var(--secondary-color);
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
+.btn-primary:not(.active),
+.btn-secondary:not(.active) {
+  color: var(--background-color);
+  cursor: default;
+}
+
+.btn-primary:not(.active) {
+  background-color: var(--secondary-color);
+}
+
+.btn-secondary:not(.active) {
+  background-color: white; /* TODO: define this color*/
+}
+
+.btn-primary.active:hover,
+.btn-secondary.active:hover {
   transform: scale(1.05);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
   transition: all 0.2s ease;
 }
 
-.btn-primary:active,
-.btn-secondary:active {
+.btn-primary.active:active,
+.btn-secondary.active:active {
   transform: scale(0.95);
   transition: transform 0.07s ease;
 }
@@ -157,4 +165,3 @@ footer .container {
   font-size: 24px;
   font-weight: bold;
 }
-

@@ -20,6 +20,17 @@ class Section {
     if (section) {
       section.hidden = false;
     }
+
+    // activate all header buttons
+    document.querySelectorAll(".header-btn").forEach((button) => {
+      button.classList.add("active");
+    });
+
+    // deactivate the specified section's header button
+    const button = document.querySelector(`#to-${this.name}-button`);
+    if (button) {
+      button.classList.remove("active");
+    }
   }
 }
 
