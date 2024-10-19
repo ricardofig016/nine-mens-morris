@@ -1,5 +1,5 @@
 import Section from "./section.mjs";
-import Dev from "./dev.mjs";
+import Home from "./home.mjs";
 
 class Auth extends Section {
   constructor() {
@@ -11,10 +11,10 @@ class Auth extends Section {
   }
 
   addListeners() {
-    document.getElementById("to-dev-button").addEventListener("click", () => {
-      document.getElementById('to-dev-button').classList.add('active');
-      document.getElementById('to-auth-button').classList.remove('active');
-      new Dev().load();
+    document.getElementById("to-home-button").addEventListener("click", () => {
+      document.getElementById("to-home-button").classList.add("active");
+      document.getElementById("to-auth-button").classList.remove("active");
+      new Home().load();
     });
   }
 }

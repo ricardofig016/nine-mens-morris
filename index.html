@@ -10,27 +10,42 @@
     <link rel="stylesheet" href="styles/styles.css" />
     <!-- scripts -->
     <script src="scripts/auth.mjs" type="module" defer></script>
-    <script src="scripts/dev.mjs" type="module" defer></script>
+    <script src="scripts/home.mjs" type="module" defer></script>
     <script src="scripts/index.mjs" type="module" defer></script>
   </head>
   <body>
     <header>
       <div class="container">
-        <div class="logo"><img src="assets/logo-big.png" alt="logo"></div>
+        <div class="logo"><img src="assets/logo-big.png" alt="logo" /></div>
         <nav>
           <ul>
-            <li><button class="btn-primary active" id="to-dev-button">Home</button></li>
+            <li>
+              <button class="btn-primary active" id="to-home-button">
+                Home
+              </button>
+            </li>
             <li><button class="btn-primary">About</button></li>
-            <li><button class="btn-primary" id="to-auth-button">Login</button></li>
+            <li>
+              <button class="btn-primary" id="to-auth-button">Login</button>
+            </li>
           </ul>
         </nav>
       </div>
     </header>
-    <section id="dev-section">
+
+    <section id="home-section">
       <h1>Welcome to 9 Men's Morris</h1>
-      <p>An ancient strategy board game where two players aim to <br> form "mills" — rows of three pieces — to remove their opponent's tokens.</p>
+      <p>
+        An ancient strategy board game where two players aim to <br />
+        form "mills" — rows of three pieces — to remove their opponent's tokens.
+      </p>
       <button class="btn-secondary">How to play</button>
-      <button class="btn-secondary" onclick="window.open('https://en.wikipedia.org/wiki/Nine_men%27s_morris', '_blank').focus();">Wikipedia</button>
+      <button
+        class="btn-secondary"
+        onclick="window.open('https://en.wikipedia.org/wiki/Nine_men%27s_morris', '_blank').focus();"
+      >
+        Wikipedia
+      </button>
     </section>
 
     <section id="auth-section">
@@ -44,6 +59,5 @@
         </div>
       </div>
     </footer>
-
   </body>
 </html>
