@@ -78,7 +78,6 @@ nav ul li a:hover {
 .active {
   background-color: var(--background-color) !important;
   color:  var(--text-color) !important;
-  border: 2px solid var(--secondary-color) !important;
 }
 
 footer {

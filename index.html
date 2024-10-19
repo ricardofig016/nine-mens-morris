@@ -19,26 +19,22 @@
         <div class="logo"><img src="assets/logo-big.png" alt="logo"></div>
         <nav>
           <ul>
-            <li><a href="#home" class="btn-primary active">Home</a></li>
-            <li><a href="#about" class="btn-primary">About</a></li>
-            <li><a href="#services" class="btn-primary">Services</a></li>
-            <li><a href="#contact" class="btn-primary">Contact</a></li>
+            <li><button class="btn-primary active" id="to-dev-button">Home</button></li>
+            <li><button class="btn-primary">About</button></li>
+            <li><button class="btn-primary" id="to-auth-button">Login</button></li>
           </ul>
         </nav>
       </div>
     </header>
     <section id="dev-section">
-      <h1>heading Heading HEADING</h1>
-      <p>This is a paragraph.</p>
-      <button class="btn-primary">primary button</button>
-      <button class="btn-secondary">secondary button</button>
-      <br><br>
-      <button class="btn-primary" id="to-auth-button">Go to Auth section</button>
+      <h1>Welcome to 9 Men's Morris</h1>
+      <p>An ancient strategy board game where two players aim to <br> form "mills" — rows of three pieces — to remove their opponent's tokens.</p>
+      <button class="btn-secondary">How to play</button>
+      <button class="btn-secondary" onclick="window.open('https://en.wikipedia.org/wiki/Nine_men%27s_morris', '_blank').focus();">Wikipedia</button>
     </section>
 
     <section id="auth-section">
       <h1>This is the Auth section</h1>
-      <button class="btn-primary" id="to-dev-button">Go to Dev section</button>
     </section>
 
     <footer>

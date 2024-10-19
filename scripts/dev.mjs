@@ -12,6 +12,8 @@ class Dev extends Section {
 
   addListeners() {
     document.getElementById("to-auth-button").addEventListener("click", () => {
+      document.getElementById('to-dev-button').classList.remove('active');
+      document.getElementById('to-auth-button').classList.add('active');
       new Auth().load();
     });
   }
