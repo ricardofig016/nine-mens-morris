@@ -15,6 +15,7 @@
 :root {
   --primary-color: #553311;
   --secondary-color: #996633;
+  --unactive-color: #fde49e;
   --background-color: #ffeead;
   --text-color: #332211;
   --font-family: "Roboto", sans-serif;
@@ -37,6 +38,10 @@ body {
   background-image: url("../assets/Background.png");
   background-repeat: no-repeat;
   background-size: cover;
+}
+a {
+  text-decoration: none;
+  color: var(--background-color);
 }
 
 header {
@@ -126,16 +131,9 @@ footer .container {
 
 .btn-primary:not(.active),
 .btn-secondary:not(.active) {
-  color: var(--background-color);
+  background-color: var(--unactive-color);
+  color: var(--primary-color);
   cursor: default;
-}
-
-.btn-primary:not(.active) {
-  background-color: var(--secondary-color);
-}
-
-.btn-secondary:not(.active) {
-  background-color: white; /* TODO: define this color*/
 }
 
 .btn-primary.active:hover,
