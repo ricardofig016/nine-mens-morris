@@ -10,11 +10,7 @@ class Auth extends Section {
     Auth.instance = this;
   }
 
-  addListeners() {
-    document.getElementById("to-home-button").addEventListener("click", () => {
-      new Home().load();
-    });
-  }
+  addListeners() {}
 }
 
 export default Auth;

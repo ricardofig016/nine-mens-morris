@@ -10,11 +10,7 @@ class Home extends Section {
     Home.instance = this;
   }
 
-  addListeners() {
-    document.getElementById("to-auth-button").addEventListener("click", () => {
-      new Auth().load();
-    });
-  }
+  addListeners() {}
 }
 
 export default Home;
