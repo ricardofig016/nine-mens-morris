@@ -1,5 +1,4 @@
 import Section from "./section.mjs";
-import Auth from "./auth.mjs";
 
 class Home extends Section {
   constructor() {

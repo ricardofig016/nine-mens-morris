@@ -15,14 +15,16 @@
 :root {
   --primary-color: #553311;
   --secondary-color: #996633;
-  --unactive-color: #fde49e;
-  --background-color: #ffeead;
+  --background-color: #fff0b4;
+  --secondary-background-color: #fde49e;
   --text-color: #332211;
   --font-family: "Roboto", sans-serif;
   --font-size: 16px;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -32,6 +34,8 @@ body {
   font-family: var(--font-family);
   font-size: var(--font-size);
   margin: 0;
+  padding: 0;
+  min-height: 100vh;
   letter-spacing: 0.03em;
   word-spacing: 0.1em;
   line-height: 1.6;
@@ -39,27 +43,44 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+header {
+  position: absolute;
+  z-index: 10;
+  top: 0;
+  background-color: var(--secondary-background-color);
+  color: var(--text-color);
+  padding: 1rem 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  width: 100%;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 10rem 0 0 0;
+  height: 100vh;
+}
+
+section.hidden {
+  display: none;
+}
+
 a {
   text-decoration: none;
   color: var(--background-color);
 }
 
-header {
-  background-color: var(--background-color);
-  color: var(--text-color);
-  padding: 20px 0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Adding shadow */
-  margin-bottom: 25px;
-  width: 100%;
+.icon path {
+  fill: var(--primary-color);
 }
 
-section {
-  padding: 0 5rem;
-  text-align: center;
-  margin: auto;
-  align-content: center;
-  justify-content: center;
-  margin-top: 12rem !important;
+.icon.hidden {
+  display: none;
 }
 
 nav ul {
@@ -114,11 +135,11 @@ footer .container {
   color: var(--background-color);
   font-size: 1.2rem;
   font-weight: bold;
-  padding: 0.8rem 1rem;
+  padding: 1rem 1.6rem;
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .btn-primary {
@@ -131,16 +152,16 @@ footer .container {
 
 .btn-primary:not(.active),
 .btn-secondary:not(.active) {
-  background-color: var(--unactive-color);
+  background-color: var(--background-color);
   color: var(--primary-color);
   cursor: default;
+  box-shadow: none;
 }
 
 .btn-primary.active:hover,
 .btn-secondary.active:hover {
   transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.4);
-  transition: all 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .btn-primary.active:active,
@@ -162,4 +183,67 @@ footer .container {
 .logo {
   font-size: 24px;
   font-weight: bold;
+}
+
+#home-section h1 {
+  margin-bottom: 0;
+}
+
+#login-section .form-container,
+#signup-section .form-container {
+  background-color: var(--secondary-background-color);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  width: 28rem;
+}
+
+#login-section .form-group,
+#signup-section .form-group {
+  position: relative;
+  display: flex;
+  margin: 1.8rem 2.5rem;
+  align-items: center;
+  justify-content: center;
+  column-gap: 1rem;
+  overflow: hidden;
+}
+
+#login-section input,
+#signup-section input {
+  padding: 0.8rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-size: 1.2rem;
+  width: 100%;
+}
+
+#login-section input:focus,
+#signup-section input:focus {
+  outline: none;
+}
+
+#toggle-password-vis-login,
+#toggle-password-vis-signup {
+  all: unset;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  position: absolute;
+  right: 1rem;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+#login-section .form-group .btn-primary,
+#signup-section .form-group .btn-primary {
+  margin: 1rem 0;
+}
+
+#go-to-signup-anchor,
+#go-to-login-anchor {
+  color: var(--secondary-color);
+  text-decoration: underline;
+  cursor: pointer;
 }

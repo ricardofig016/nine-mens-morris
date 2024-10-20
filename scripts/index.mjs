@@ -1,12 +1,15 @@
-import Home from "./home.mjs";
-import Auth from "./auth.mjs";
+import About from "./sections/about.mjs";
+import Home from "./sections/home.mjs";
+import Login from "./sections/login.mjs";
 
 const sections = {
+  about: About,
+  login: Login,
   home: Home,
-  auth: Auth,
 };
 
-const defaultSection = new Home(); // show this section on page load
+// show this section on page load
+const defaultSection = new Home();
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the header buttons

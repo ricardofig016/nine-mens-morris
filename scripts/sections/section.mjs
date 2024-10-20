@@ -4,6 +4,9 @@ class Section {
     this.addListeners();
   }
 
+  /**
+   * adds event listeners to the section's elements the first time it is loaded (to prevent duplicate listeners)
+   */
   addListeners() {}
 
   /**
@@ -12,13 +15,13 @@ class Section {
   load() {
     // hide all sections
     document.querySelectorAll("section").forEach((section) => {
-      section.hidden = true;
+      section.classList.add("hidden");
     });
 
     // show the specified section
     const section = document.querySelector(`#${this.name}-section`);
     if (section) {
-      section.hidden = false;
+      section.classList.remove("hidden");
     }
 
     // activate all header buttons
