@@ -9,11 +9,11 @@ class Game {
     this.level = level;
     this.size = levels[this.level].size;
     this.grid = Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => ({ value: "", hidden: true })));
-    this.connections = this.getConnections();
-    this.hideUnusedCells();
+    this.connections = this.#getConnections();
+    this.#hideUnusedCells();
   }
 
-  getConnections() {
+  #getConnections() {
     const maxIndex = this.size - 1;
     function sortConnection([i, j]) {
       if (i[0] < j[0]) return [i, j];
@@ -51,7 +51,7 @@ class Game {
     return allConnections;
   }
 
-  hideUnusedCells() {
+  #hideUnusedCells() {
     this.connections.forEach(([i, j]) => {
       this.grid[i[0]][i[1]].hidden = false;
       this.grid[j[0]][j[1]].hidden = false;
