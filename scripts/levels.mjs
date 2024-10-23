@@ -2,14 +2,10 @@ const levels = {
   mini: {
     size: 3,
     pieces: 3,
-    firstQuadrantConnections: [
+    firstOctantConnections: [
       [
         [0, 0],
         [0, 1],
-      ],
-      [
-        [0, 0],
-        [1, 0],
       ],
       [
         [0, 0],
@@ -17,10 +13,6 @@ const levels = {
       ],
       [
         [0, 1],
-        [1, 1],
-      ],
-      [
-        [1, 0],
         [1, 1],
       ],
     ],
@@ -28,90 +20,54 @@ const levels = {
   small: {
     size: 5,
     pieces: 6,
-    firstQuadrantConnections: [
+    firstOctantConnections: [
       [
         [0, 0],
         [0, 2],
-      ],
-      [
-        [0, 0],
-        [2, 0],
       ],
       [
         [0, 2],
         [1, 2],
       ],
       [
-        [2, 0],
-        [2, 1],
-      ],
-      [
         [1, 1],
         [1, 2],
-      ],
-      [
-        [1, 1],
-        [2, 1],
       ],
     ],
   },
   normal: {
     size: 7,
     pieces: 9,
-    firstQuadrantConnections: [
+    firstOctantConnections: [
       [
         [0, 0],
         [0, 3],
-      ],
-      [
-        [0, 0],
-        [3, 0],
       ],
       [
         [0, 3],
         [1, 3],
       ],
       [
-        [3, 0],
-        [3, 1],
-      ],
-      [
         [1, 1],
         [1, 3],
-      ],
-      [
-        [1, 1],
-        [3, 1],
       ],
       [
         [1, 3],
         [2, 3],
       ],
       [
-        [3, 1],
-        [3, 2],
-      ],
-      [
         [2, 2],
         [2, 3],
-      ],
-      [
-        [2, 2],
-        [3, 2],
       ],
     ],
   },
   big: {
     size: 7,
     pieces: 12,
-    firstQuadrantConnections: [
+    firstOctantConnections: [
       [
         [0, 0],
         [0, 3],
-      ],
-      [
-        [0, 0],
-        [3, 0],
       ],
       [
         [0, 0],
@@ -122,16 +78,8 @@ const levels = {
         [1, 3],
       ],
       [
-        [3, 0],
-        [3, 1],
-      ],
-      [
         [1, 1],
         [1, 3],
-      ],
-      [
-        [1, 1],
-        [3, 1],
       ],
       [
         [1, 1],
@@ -142,16 +90,8 @@ const levels = {
         [2, 3],
       ],
       [
-        [3, 1],
-        [3, 2],
-      ],
-      [
         [2, 2],
         [2, 3],
-      ],
-      [
-        [2, 2],
-        [3, 2],
       ],
     ],
   },

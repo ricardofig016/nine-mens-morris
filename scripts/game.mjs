@@ -23,15 +23,21 @@ class Game {
     }
     /**
      * @param {[[Int,Int],[Int,Int]]} arr the array of connections to fold
-     * @param {Int} direction the direction to fold the connections ( 0 for a right fold and 1 for a down fold)
+     * @param {Int} direction the direction to fold the connections ( 0 for a diagonal fold, 1 for a right fold and 2 for a down fold)
      * @returns
      */
     function fold(arr, direction) {
       let folded = arr.map((conn) => conn.map((point) => [...point]));
       arr.forEach(([i, j]) => {
         let connection;
-        // right fold
+        // diagonal fold
         if (direction === 0)
+          connection = sortConnection([
+            [i[1], i[0]],
+            [j[1], j[0]],
+          ]);
+        // right fold
+        else if (direction === 1)
           connection = sortConnection([
             [i[0], maxIndex - i[1]],
             [j[0], maxIndex - j[1]],
@@ -46,8 +52,9 @@ class Game {
       });
       return folded;
     }
-    const topConnections = fold(levels[this.level].firstQuadrantConnections, 0);
-    const allConnections = fold(topConnections, 1);
+    const firstQuadrantConnections = fold(levels[this.level].firstOctantConnections, 0);
+    const topConnections = fold(firstQuadrantConnections, 1);
+    const allConnections = fold(topConnections, 2);
     return allConnections;
   }
 
