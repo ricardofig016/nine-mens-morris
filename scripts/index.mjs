@@ -1,12 +1,14 @@
 import About from "./sections/about.mjs";
 import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
+import Board from "./sections/board.mjs";
 import Game from "./game.mjs";
 
 const sections = {
   about: About,
   login: Login,
   home: Home,
+  board: Board,
 };
 
 // show this section on page load
