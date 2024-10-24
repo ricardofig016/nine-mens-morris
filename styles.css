@@ -76,6 +76,10 @@ a {
   color: var(--background-color);
 }
 
+h1{
+  margin-top: 10px;
+}
+
 .icon path {
   fill: var(--primary-color);
 }
@@ -116,6 +120,11 @@ footer .container {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+#main-logo{
+  width: 150px;
+  margin-bottom: 10px;
 }
 
 .footer-bottom {
