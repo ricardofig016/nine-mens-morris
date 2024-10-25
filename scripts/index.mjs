@@ -2,7 +2,7 @@ import About from "./sections/about.mjs";
 import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
 import Board from "./sections/board.mjs";
-import Game from "./game.mjs";
+import Game from "./game/game.mjs";
 
 import { initializeInstructionsModal } from "./instructions.mjs";
 
@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
   defaultSection.load();
 
   initializeInstructionsModal();
+
+  // debugging the Game class
+  const mini = new Game("mini", "Alice", "Bob", true);
+  mini.print(true);
+
+  const small = new Game("small", "Alice", "Bob", true);
+  small.print(true);
+
+  const normal = new Game("normal", "Alice", "Bob", true);
+  normal.print(true);
+
+  const big = new Game("big", "Alice", "Bob", true);
+  big.print(true);
 });
-
-// debugging the Game class
-const mini = new Game("mini");
-mini.print();
-
-const small = new Game("small");
-small.print();
-
-const normal = new Game("normal");
-normal.print();
-
-const big = new Game("big");
-big.print();

@@ -1,28 +1,41 @@
+import Player from "./player.mjs";
+import Piece from "./piece.mjs";
 import levels from "./levels.mjs";
 
 class Game {
   /**
-   * @param {string} level the level of the game, can be *mini*, *small*, *normal* or *big*
-   * @returns {Game}
+   * Creates a new Game instance.
+   * @param {string} level the level of the game, can be ```mini```, ```small```, ```normal``` or ```big```
    */
-  constructor(level) {
+  constructor(level, username1, username2, shufflePlayers = false) {
     this.level = level;
     this.size = levels[this.level].size;
     this.grid = Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => ({ value: "", isRelevant: false })));
     this.connections = this.#getConnections();
     this.#hideNotRelevantCells();
+    this.#definePlayers(username1, username2, shufflePlayers);
   }
 
   // public methods
 
   start() {}
 
-  print() {
+  print(includeInfo = false) {
+    let str = "";
+    if (includeInfo) {
+      str += `Level: ${this.level}\n`;
+      str += `Players: ${this.players[0].username} (${this.players[0].symbol}) vs ${this.players[1].username} (${this.players[1].symbol})\n`;
+    }
+    str += this.gridString();
+    console.log(str);
+  }
+
+  gridString() {
     function setCharAt(str, i, char) {
       return str.substring(0, i) + char + str.substring(i + 1);
     }
     let strings = Array.from({ length: this.size * 2 - 1 }, () => " ".repeat(this.size * 4 - 3));
-    // print values
+    // add values
     this.grid.forEach((row, i) => {
       row.forEach((cell, j) => {
         if (cell.isRelevant && cell.value) {
@@ -33,27 +46,26 @@ class Game {
     });
     this.connections.forEach(([start, end]) => {
       if (start[0] === end[0]) {
-        // print horizontal connections
+        // add horizontal connections
         for (let i = start[1] * 4 + 2; i <= end[1] * 4 - 2; i++) {
           strings[start[0] * 2] = setCharAt(strings[start[0] * 2], i, "—");
         }
         strings[start[0] * 2] = setCharAt(strings[start[0] * 2], start[1] * 4 + 2, "—");
       } else if (start[1] === end[1]) {
-        // print vertical connections
+        // add vertical connections
         for (let i = start[0] * 2 + 1; i <= end[0] * 2 - 1; i++) {
           strings[i] = setCharAt(strings[i], start[1] * 4, "|");
         }
         strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4, "|");
       } else if (start[1] > end[1]) {
-        // print diagonal left connections
+        // add diagonal left connections
         strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 - 2, "/");
       } else if (start[1] < end[1]) {
-        // print diagonal right connections
+        // add diagonal right connections
         strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 + 2, "\\");
       }
     });
-    const toPrint = strings.join("\n");
-    console.log(toPrint);
+    return strings.join("\n");
   }
 
   // private methods
@@ -130,6 +142,22 @@ class Game {
       this.grid[i[0]][i[1]].isRelevant = true;
       this.grid[j[0]][j[1]].isRelevant = true;
     });
+  }
+
+  /**
+   * @private
+   * Defines the 2 players of the game.
+   *
+   * @param {string} username1 the username of the first player
+   * @param {string} username2 the username of the second player
+   * @param {boolean} shufflePlayers whether to shuffle the players or not
+   */
+  #definePlayers(username1, username2, shufflePlayers) {
+    if (shufflePlayers && Math.random() < 0.5) {
+      this.players = [new Player(username2, "X"), new Player(username1, "O")];
+    } else {
+      this.players = [new Player(username1, "X"), new Player(username2, "O")];
+    }
   }
 }
 
