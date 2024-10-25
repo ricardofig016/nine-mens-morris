@@ -29,15 +29,18 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeInstructionsModal();
 
   // debugging the Game class
-  const mini = new Game("mini", "Alice", "Bob", true);
-  mini.print(true);
+  // const mini = new Game("mini", "Alice", "Bob", true);
+  // mini.print(true);
 
-  const small = new Game("small", "Alice", "Bob", true);
-  small.print(true);
+  // const small = new Game("small", "Alice", "Bob", true);
+  // small.print(true);
 
-  const normal = new Game("normal", "Alice", "Bob", true);
-  normal.print(true);
+  // const normal = new Game("normal", "Alice", "Bob", true);
+  // normal.print(true);
 
   const big = new Game("big", "Alice", "Bob", true);
+  big.place(0, 0);
+  big.place(1, 1);
+  big.place(2, 2);
   big.print(true);
 });

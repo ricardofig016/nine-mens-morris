@@ -5,70 +5,81 @@ import levels from "./levels.mjs";
 class Game {
   /**
    * Creates a new Game instance.
-   * @param {string} level the level of the game, can be ```mini```, ```small```, ```normal``` or ```big```
+   * @param {string} level The level of the game, can be ```mini```, ```small```, ```normal``` or ```big```.
+   * @param {string} username1 The name of the first player.
+   * @param {string} username2 The name of the second player.
+   * @param {boolean} [shufflePlayers=false] Whether to shuffle the players' order.
+   *
+   * Initializes the game grid, connections, and players.
    */
   constructor(level, username1, username2, shufflePlayers = false) {
     this.level = level;
     this.size = levels[this.level].size;
-    this.grid = Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => ({ value: "", isRelevant: false })));
+    this.grid = Array.from({ length: this.size }, () => Array.from({ length: this.size }, () => ({ piece: null, isRelevant: false })));
     this.connections = this.#getConnections();
     this.#hideNotRelevantCells();
+    this.pieceAmount = levels[this.level].pieces;
     this.#definePlayers(username1, username2, shufflePlayers);
+    this.phase = "placing"; // can be "placing" or "moving"
+    this.turn = 0; // 0 for player X, 1 for player O
+    this.pickedUpPiece = null;
   }
 
   // public methods
 
-  start() {}
+  /**
+   * Plays a piece on the board.
+   * @param {number} i The row index.
+   * @param {number} j The column index.
+   * @returns {boolean} Whether the piece was successfully placed or not.
+   */
+  place(i, j) {
+    if (this.phase === "placing") {
+      // placing phase
+      if (this.grid[i][j].piece) return false;
+      this.grid[i][j].piece = new Piece(this.players[this.turn].symbol);
+      this.grid[i][j].piece.status = "placed";
+      this.players[this.turn].inHandPieces--;
+      this.players[this.turn].alivePieces++;
+      if (this.players[0].inHandPieces === 0 && this.players[1].inHandPieces === 0) this.phase = "moving";
+    } else {
+      // moving phase
+      if (!this.pickedUpPiece) return false;
+      if (this.grid[i][j].piece) return false;
+      this.grid[i][j].piece = this.pickedUpPiece;
+      this.grid[i][j].piece.status = "placed";
+      this.pickedUpPiece = null;
+    }
+    this.#flipTurn();
+    return true;
+  }
+
+  /**
+   * Moves a piece on the board.
+   * @param {number} i The row index.
+   * @param {number} j The column index.
+   */
+  pickUp(i, j) {}
 
   print(includeInfo = false) {
     let str = "";
     if (includeInfo) {
       str += `Level: ${this.level}\n`;
-      str += `Players: ${this.players[0].username} (${this.players[0].symbol}) vs ${this.players[1].username} (${this.players[1].symbol})\n`;
+      str += `Phase: ${this.phase}\n`;
+      str += `Turn: ${this.players[this.turn].username} \n`;
+      str += `Players: ${this.players[0].username} vs ${this.players[1].username} \n`;
+      str += this.players[0].toString();
+      str += this.players[1].toString();
     }
-    str += this.gridString();
+    str += this.#gridString();
     console.log(str);
   }
 
-  gridString() {
-    function setCharAt(str, i, char) {
-      return str.substring(0, i) + char + str.substring(i + 1);
-    }
-    let strings = Array.from({ length: this.size * 2 - 1 }, () => " ".repeat(this.size * 4 - 3));
-    // add values
-    this.grid.forEach((row, i) => {
-      row.forEach((cell, j) => {
-        if (cell.isRelevant && cell.value) {
-          const ch = cell.value === 1 ? "X" : "O";
-          strings[i * 2] = setCharAt(strings[i * 2], j * 4, ch);
-        }
-      });
-    });
-    this.connections.forEach(([start, end]) => {
-      if (start[0] === end[0]) {
-        // add horizontal connections
-        for (let i = start[1] * 4 + 2; i <= end[1] * 4 - 2; i++) {
-          strings[start[0] * 2] = setCharAt(strings[start[0] * 2], i, "—");
-        }
-        strings[start[0] * 2] = setCharAt(strings[start[0] * 2], start[1] * 4 + 2, "—");
-      } else if (start[1] === end[1]) {
-        // add vertical connections
-        for (let i = start[0] * 2 + 1; i <= end[0] * 2 - 1; i++) {
-          strings[i] = setCharAt(strings[i], start[1] * 4, "|");
-        }
-        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4, "|");
-      } else if (start[1] > end[1]) {
-        // add diagonal left connections
-        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 - 2, "/");
-      } else if (start[1] < end[1]) {
-        // add diagonal right connections
-        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 + 2, "\\");
-      }
-    });
-    return strings.join("\n");
-  }
-
   // private methods
+
+  #flipTurn() {
+    this.turn = 1 - this.turn;
+  }
 
   /**
    * @private
@@ -154,10 +165,47 @@ class Game {
    */
   #definePlayers(username1, username2, shufflePlayers) {
     if (shufflePlayers && Math.random() < 0.5) {
-      this.players = [new Player(username2, "X"), new Player(username1, "O")];
+      this.players = [new Player(username2, "X", this.pieceAmount), new Player(username1, "O", this.pieceAmount)];
     } else {
-      this.players = [new Player(username1, "X"), new Player(username2, "O")];
+      this.players = [new Player(username1, "X", this.pieceAmount), new Player(username2, "O", this.pieceAmount)];
     }
+  }
+
+  #gridString() {
+    function setCharAt(str, i, char) {
+      return str.substring(0, i) + char + str.substring(i + 1);
+    }
+    let strings = Array.from({ length: this.size * 2 - 1 }, () => " ".repeat(this.size * 4 - 3));
+    // add piece symbols
+    this.grid.forEach((row, i) => {
+      row.forEach((cell, j) => {
+        if (cell.isRelevant && cell.piece) {
+          strings[i * 2] = setCharAt(strings[i * 2], j * 4, cell.piece.symbol);
+        }
+      });
+    });
+    this.connections.forEach(([start, end]) => {
+      if (start[0] === end[0]) {
+        // add horizontal connections
+        for (let i = start[1] * 4 + 2; i <= end[1] * 4 - 2; i++) {
+          strings[start[0] * 2] = setCharAt(strings[start[0] * 2], i, "—");
+        }
+        strings[start[0] * 2] = setCharAt(strings[start[0] * 2], start[1] * 4 + 2, "—");
+      } else if (start[1] === end[1]) {
+        // add vertical connections
+        for (let i = start[0] * 2 + 1; i <= end[0] * 2 - 1; i++) {
+          strings[i] = setCharAt(strings[i], start[1] * 4, "|");
+        }
+        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4, "|");
+      } else if (start[1] > end[1]) {
+        // add diagonal left connections
+        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 - 2, "/");
+      } else if (start[1] < end[1]) {
+        // add diagonal right connections
+        strings[start[0] * 2 + 1] = setCharAt(strings[start[0] * 2 + 1], start[1] * 4 + 2, "\\");
+      }
+    });
+    return strings.join("\n");
   }
 }
 
