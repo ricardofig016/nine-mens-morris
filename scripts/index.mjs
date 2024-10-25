@@ -30,10 +30,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // debugging the Game class
   const game = new Game("big", "Alice", "Bob", true);
-  game.place(0, 0).success;
-  game.place(1, 1).success;
-  game.pickUp(0, 0).success;
-  game.place(5, 5).success;
-  game.pickUp(0, 0).success;
+  game.place(0, 0);
+  game.place(1, 1);
+  game.pickUp(0, 0);
+  game.place(5, 5);
+  game.pickUp(0, 0);
   game.print(true);
 });

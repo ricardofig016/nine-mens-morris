@@ -1,6 +1,7 @@
 import Player from "./player.mjs";
 import Piece from "./piece.mjs";
 import levels from "./levels.mjs";
+import error from "../error.mjs";
 
 class Game {
   /**
@@ -38,7 +39,7 @@ class Game {
   place(i, j) {
     if (this.phase === "placing") {
       // placing phase
-      if (this.grid[i][j].piece) return { success: false, message: "there is already a piece here" };
+      if (this.grid[i][j].piece) return error("there is already a piece here");
       this.grid[i][j].piece = new Piece(this.players[this.turn].symbol, i, j);
       this.grid[i][j].piece.status = "placed";
       this.players[this.turn].inHandPieces--;
@@ -46,8 +47,8 @@ class Game {
       if (this.players[0].inHandPieces === 0 && this.players[1].inHandPieces === 0) this.phase = "moving";
     } else {
       // moving phase
-      if (!this.pickedUpPiece) return { success: false, message: "you need to pick up a piece first" };
-      if (this.grid[i][j].piece) return { success: false, message: "there is already a piece here" };
+      if (!this.pickedUpPiece) return error("you need to pick up a piece first");
+      if (this.grid[i][j].piece) return error("there is already a piece here");
       this.grid[this.pickedUpPiece.coords[0]][this.pickedUpPiece.coords[1]].piece = null;
       this.grid[i][j].piece = this.pickedUpPiece;
       this.pickedUpPiece = null;
@@ -70,10 +71,10 @@ class Game {
    */
   pickUp(i, j) {
     this.cancelPickUp();
-    if (this.phase === "placing") return { success: false, message: "you can't pick up a piece in the placing phase" };
-    if (!this.grid[i][j].piece) return { success: false, message: "there is no piece here to pick up" };
-    if (this.grid[i][j].piece.status !== "placed") return { success: false, message: "you can't pick up a piece that is not placed" };
-    if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return { success: false, message: "you can't pick up your opponent's piece" };
+    if (this.phase === "placing") return error("you can't pick up a piece in the placing phase");
+    if (!this.grid[i][j].piece) return error("there is no piece here to pick up");
+    if (this.grid[i][j].piece.status !== "placed") return error("you can't pick up a piece that is not placed");
+    if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error("you can't pick up your opponent's piece");
     this.pickedUpPiece = this.grid[i][j].piece;
     this.pickedUpPiece.status = "up";
     return { success: true };
