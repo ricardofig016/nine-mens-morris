@@ -17,7 +17,7 @@ const sections = {
 const defaultSection = new Home();
 
 document.addEventListener("DOMContentLoaded", () => {
-  // add listeners for the header buttons
+  // add listeners for the nav buttons
   Object.keys(sections).forEach((key) => {
     document.getElementById(`to-${key}-button`).addEventListener("click", () => {
       new sections[key]().load();
