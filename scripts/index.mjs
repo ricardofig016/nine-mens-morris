@@ -3,7 +3,7 @@ import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
 import Board from "./sections/board.mjs";
 import Game from "./game/game.mjs";
-
+import Toast from "./toast.mjs";
 import { initializeInstructionsModal } from "./instructions.mjs";
 
 const sections = {

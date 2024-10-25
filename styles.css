@@ -335,3 +335,27 @@ footer .container {
   color: var(--terciary-color);
   border: 2px solid black;
 }
+
+.toast {
+  visibility: hidden;
+  min-width: 20rem;
+  max-width: 40rem;
+  background-color: var(--secondary-color);
+  color: var(--background-color);
+  text-align: center;
+  border-radius: 4px;
+  padding: 1.3rem 3.5rem;
+  position: fixed;
+  z-index: 10;
+  left: 2rem;
+  top: 13rem;
+  font-size: 1.3rem;
+  opacity: 0;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
