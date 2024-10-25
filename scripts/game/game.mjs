@@ -31,35 +31,60 @@ class Game {
    * Plays a piece on the board.
    * @param {number} i The row index.
    * @param {number} j The column index.
-   * @returns {boolean} Whether the piece was successfully placed or not.
+   * @returns {Object} An object containing the success status and an optional error message.
+   * @returns {boolean} [return.success] - Indicates whether the piece was successfully placed.
+   * @returns {string} [return.message] - An optional error message if the piece could not be placed.
    */
   place(i, j) {
     if (this.phase === "placing") {
       // placing phase
-      if (this.grid[i][j].piece) return false;
-      this.grid[i][j].piece = new Piece(this.players[this.turn].symbol);
+      if (this.grid[i][j].piece) return { success: false, message: "there is already a piece here" };
+      this.grid[i][j].piece = new Piece(this.players[this.turn].symbol, i, j);
       this.grid[i][j].piece.status = "placed";
       this.players[this.turn].inHandPieces--;
       this.players[this.turn].alivePieces++;
       if (this.players[0].inHandPieces === 0 && this.players[1].inHandPieces === 0) this.phase = "moving";
     } else {
       // moving phase
-      if (!this.pickedUpPiece) return false;
-      if (this.grid[i][j].piece) return false;
+      if (!this.pickedUpPiece) return { success: false, message: "you need to pick up a piece first" };
+      if (this.grid[i][j].piece) return { success: false, message: "there is already a piece here" };
+      this.grid[this.pickedUpPiece.coords[0]][this.pickedUpPiece.coords[1]].piece = null;
       this.grid[i][j].piece = this.pickedUpPiece;
-      this.grid[i][j].piece.status = "placed";
       this.pickedUpPiece = null;
+      this.grid[i][j].piece.status = "placed";
+      this.grid[i][j].piece.updateCoords(i, j);
     }
     this.#flipTurn();
-    return true;
+    return { success: true };
   }
 
   /**
-   * Moves a piece on the board.
-   * @param {number} i The row index.
-   * @param {number} j The column index.
+   * Attempts to pick up a piece from the specified coordinates.
+   * Cancels any previous pick-up action before attempting to pick up a new piece.
+   *
+   * @param {number} i - The row index of the piece to pick up.
+   * @param {number} j - The column index of the piece to pick up.
+   * @returns {Object} An object containing the success status and an optional error message.
+   * @returns {boolean} [return.success] - Indicates whether the piece was successfully picked up.
+   * @returns {string} [return.message] - An optional error message if the piece could not be picked up.
    */
-  pickUp(i, j) {}
+  pickUp(i, j) {
+    this.cancelPickUp();
+    if (this.phase === "placing") return { success: false, message: "you can't pick up a piece in the placing phase" };
+    if (!this.grid[i][j].piece) return { success: false, message: "there is no piece here to pick up" };
+    if (this.grid[i][j].piece.status !== "placed") return { success: false, message: "you can't pick up a piece that is not placed" };
+    if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return { success: false, message: "you can't pick up your opponent's piece" };
+    this.pickedUpPiece = this.grid[i][j].piece;
+    this.pickedUpPiece.status = "up";
+    return { success: true };
+  }
+
+  cancelPickUp() {
+    if (!this.pickedUpPiece || this.pickedUpPiece.status !== "up") return false;
+    this.pickedUpPiece.status = "placed";
+    this.pickedUpPiece = null;
+    return true;
+  }
 
   print(includeInfo = false) {
     let str = "";

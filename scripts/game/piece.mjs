@@ -11,10 +11,17 @@ class Piece {
   /**
    * Creates a new piece.
    * @param {string} symbol - The symbol to represent the piece (e.g., X or O).
+   * @param {number} i - The row index of the piece.
+   * @param {number} j - The column index of the piece.
    */
-  constructor(symbol) {
+  constructor(symbol, i, j) {
     this.symbol = symbol;
     this.status = "hand";
+    this.coords = [i, j];
+  }
+
+  updateCoords(i, j) {
+    this.coords = [i, j];
   }
 }
 
