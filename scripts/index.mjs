@@ -4,6 +4,8 @@ import Login from "./sections/login.mjs";
 import Board from "./sections/board.mjs";
 import Game from "./game.mjs";
 
+import { initializeInstructionsModal } from "./instructions.mjs";
+
 const sections = {
   about: About,
   login: Login,
@@ -23,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   defaultSection.load();
+
+  initializeInstructionsModal();
 });
 
 // debugging the Game class
