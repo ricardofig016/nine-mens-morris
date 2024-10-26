@@ -62,7 +62,11 @@ document.addEventListener("DOMContentLoaded", () => {
   game.place(4, 3);
   game.pickUp(5, 5);
   game.place(5, 3);
-  game.pickUp(3, 2);
-  game.place(4, 2);
+  game.pickUp(1, 1);
+  game.place(3, 1);
+  game.pickUp(3, 6);
+  game.place(3, 5);
+  game.pickUp(0, 3);
+  game.place(0, 6);
   game.print(true);
 });

@@ -1,6 +1,7 @@
 import Player from "./player.mjs";
 import Piece from "./piece.mjs";
 import levels from "./levels.mjs";
+import millCheckOffsets from "./millCheckOffsets.mjs";
 import error from "../error.mjs";
 
 class Game {
@@ -35,8 +36,9 @@ class Game {
    * @returns {boolean} Whether the piece was placed successfully.
    */
   place(i, j) {
-    if (i < 0 || i >= this.size || j < 0 || j >= this.size) return error(`coordinates out of bounds [${i}, ${j}]`);
+    if (!this.#inBounds(i, j)) return error(`coordinates out of bounds [${i}, ${j}]`);
     if (!this.grid[i][j].isRelevant) return error(`you can't place a piece here, this cell is not relevant [${i}, ${j}]`);
+    if (this.phase === "taking") return error("you can't place a piece in the taking phase");
     if (this.phase === "placing") {
       // placing phase
       if (this.grid[i][j].piece) return error(`there is already a piece here [${i}, ${j}]`);
@@ -55,6 +57,7 @@ class Game {
       this.grid[i][j].piece.status = "placed";
       this.grid[i][j].piece.updateCoords(i, j);
     }
+    if (this.#checkMill(i, j)) console.log("Mill formed on", [i, j]);
     this.#flipTurn();
     return true;
   }
@@ -68,7 +71,7 @@ class Game {
    * @returns {boolean} Whether the piece was picked up successfully.
    */
   pickUp(i, j) {
-    if (this.phase === "placing") return error("you can't pick up a piece in the placing phase");
+    if (this.phase !== "moving") return error("you can only pick up a piece in the moving phase");
     if (!this.grid[i][j].piece) return error(`there is no piece here to pick up [${i}, ${j}]`);
     if (this.grid[i][j].piece.status !== "placed") return error(`you can't pick up a piece that is not placed [${i}, ${j}]`);
     if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error(`you can't pick up your opponent's piece [${i}, ${j}]`);
@@ -97,14 +100,6 @@ class Game {
     str += this.players[1].toString();
     str += `Turn: ${this.players[this.turn].username} (${this.players[this.turn].symbol}) \n`;
     str += this.#gridString() + "\n";
-    str += "Pieces:\n";
-    this.grid.forEach((row) => {
-      row.forEach((cell) => {
-        if (cell.isRelevant && cell.piece) {
-          str += `\t(${cell.piece.coords[0]}, ${cell.piece.coords[1]}) ${cell.piece.symbol} ${cell.piece.status}\n`;
-        }
-      });
-    });
     console.log(str);
   }
 
@@ -130,47 +125,36 @@ class Game {
    */
   #getConnections() {
     const maxIndex = this.size - 1;
-    function sortConnection([i, j]) {
-      if (i[0] < j[0]) return [i, j];
-      if (i[0] > j[0]) return [j, i];
-      if (i[1] < j[1]) return [i, j];
-      return [j, i];
-    }
     /**
      * @param {Array<Array<Array<number>>>} arr the array of connections to fold
      * @param {number} direction the direction to fold the connections ( 0 for a diagonal fold, 1 for a vertical fold and 2 for an horizontal fold)
      * @returns {Array<Array<Array<number>>>} the folded connections
      */
-    function fold(arr, direction) {
+    const fold = (arr, direction) => {
       let folded = arr.map((conn) => conn.map((point) => [...point]));
       arr.forEach(([i, j]) => {
         let connection;
         // diagonal fold
-        if (direction === 0)
-          connection = sortConnection([
-            [i[1], i[0]],
-            [j[1], j[0]],
-          ]);
+        if (direction === 0) connection = this.#sortConnection([i[1], i[0]], [j[1], j[0]]);
         // vertical fold
-        else if (direction === 1)
-          connection = sortConnection([
-            [i[0], maxIndex - i[1]],
-            [j[0], maxIndex - j[1]],
-          ]);
+        else if (direction === 1) connection = this.#sortConnection([i[0], maxIndex - i[1]], [j[0], maxIndex - j[1]]);
         // horizontal fold
-        else
-          connection = sortConnection([
-            [maxIndex - i[0], i[1]],
-            [maxIndex - j[0], j[1]],
-          ]);
+        else connection = this.#sortConnection([maxIndex - i[0], i[1]], [maxIndex - j[0], j[1]]);
         folded.push(connection);
       });
       return folded;
-    }
+    };
     const firstQuadrantConnections = fold(levels[this.level].firstOctantConnections, 0);
     const topConnections = fold(firstQuadrantConnections, 1);
     const allConnections = fold(topConnections, 2);
     return allConnections;
+  }
+
+  #sortConnection(i, j) {
+    if (i[0] < j[0]) return [i, j];
+    if (i[0] > j[0]) return [j, i];
+    if (i[1] < j[1]) return [i, j];
+    return [j, i];
   }
 
   /**
@@ -202,6 +186,54 @@ class Game {
     } else {
       this.players = [new Player(username1, "X", this.pieceAmount), new Player(username2, "O", this.pieceAmount)];
     }
+  }
+
+  /**
+   * Checks if placing a piece at the given coordinates forms a mill.
+   *
+   * A mill is formed when three pieces of the same symbol are aligned either horizontally, vertically, or diagonally.
+   * This method checks all possible directions for forming a mill from the given coordinates.
+   *
+   * @param {number} i - The row index of the piece.
+   * @param {number} j - The column index of the piece.
+   * @returns {boolean} - Returns true if a mill is formed, otherwise false.
+   */
+  #checkMill(i, j) {
+    const nextRelevantCell = ([i, j], [iOffset, jOffset], distance = 1) => {
+      let iNew = i + iOffset;
+      let jNew = j + jOffset;
+      while (this.#inBounds(iNew, jNew) && !this.grid[iNew][jNew].isRelevant) {
+        iNew += iOffset;
+        jNew += jOffset;
+      }
+      if (!this.#inBounds(iNew, jNew)) return null;
+      if (!this.connections.some((c) => c.toString() === this.#sortConnection([i, j], [iNew, jNew]).toString())) return null;
+      if (distance > 1) return nextRelevantCell([iNew, jNew], [iOffset, jOffset], distance - 1);
+      return [iNew, jNew];
+    };
+    const checkMillWith = (cell1, cell2) => {
+      if (!cell1 || !cell2) return false;
+      let [i1, j1] = cell1;
+      let [i2, j2] = cell2;
+      return (
+        // coords are in bounds
+        this.#inBounds(i1, j1) &&
+        this.#inBounds(i2, j2) &&
+        // the given coords have pieces
+        this.grid[i1][j1].piece &&
+        this.grid[i2][j2].piece &&
+        // the pieces have the same symbol
+        this.grid[i1][j1].piece.symbol === this.grid[i][j].piece.symbol &&
+        this.grid[i2][j2].piece.symbol === this.grid[i][j].piece.symbol
+      );
+    };
+    for (const [first, second] of millCheckOffsets)
+      if (checkMillWith(nextRelevantCell([i, j], first.offset, first.distance), nextRelevantCell([i, j], second.offset, second.distance))) return true;
+    return false;
+  }
+
+  #inBounds(i, j) {
+    return i >= 0 && i < this.size && j >= 0 && j < this.size;
   }
 
   #gridString() {
