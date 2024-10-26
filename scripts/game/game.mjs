@@ -32,14 +32,14 @@ class Game {
    * Plays a piece on the board.
    * @param {number} i The row index.
    * @param {number} j The column index.
-   * @returns {Object} An object containing the success status and an optional error message.
-   * @returns {boolean} [return.success] - Indicates whether the piece was successfully placed.
-   * @returns {string} [return.message] - An optional error message if the piece could not be placed.
+   * @returns {boolean} Whether the piece was placed successfully.
    */
   place(i, j) {
+    if (i < 0 || i >= this.size || j < 0 || j >= this.size) return error(`coordinates out of bounds [${i}, ${j}]`);
+    if (!this.grid[i][j].isRelevant) return error(`you can't place a piece here, this cell is not relevant [${i}, ${j}]`);
     if (this.phase === "placing") {
       // placing phase
-      if (this.grid[i][j].piece) return error("there is already a piece here");
+      if (this.grid[i][j].piece) return error(`there is already a piece here [${i}, ${j}]`);
       this.grid[i][j].piece = new Piece(this.players[this.turn].symbol, i, j);
       this.grid[i][j].piece.status = "placed";
       this.players[this.turn].inHandPieces--;
@@ -48,7 +48,7 @@ class Game {
     } else {
       // moving phase
       if (!this.pickedUpPiece) return error("you need to pick up a piece first");
-      if (this.grid[i][j].piece) return error("there is already a piece here");
+      if (this.grid[i][j].piece) return error(`there is already a piece here [${i}, ${j}]`);
       this.grid[this.pickedUpPiece.coords[0]][this.pickedUpPiece.coords[1]].piece = null;
       this.grid[i][j].piece = this.pickedUpPiece;
       this.pickedUpPiece = null;
@@ -56,7 +56,7 @@ class Game {
       this.grid[i][j].piece.updateCoords(i, j);
     }
     this.#flipTurn();
-    return { success: true };
+    return true;
   }
 
   /**
@@ -65,39 +65,46 @@ class Game {
    *
    * @param {number} i - The row index of the piece to pick up.
    * @param {number} j - The column index of the piece to pick up.
-   * @returns {Object} An object containing the success status and an optional error message.
-   * @returns {boolean} [return.success] - Indicates whether the piece was successfully picked up.
-   * @returns {string} [return.message] - An optional error message if the piece could not be picked up.
+   * @returns {boolean} Whether the piece was picked up successfully.
    */
   pickUp(i, j) {
-    this.cancelPickUp();
     if (this.phase === "placing") return error("you can't pick up a piece in the placing phase");
-    if (!this.grid[i][j].piece) return error("there is no piece here to pick up");
-    if (this.grid[i][j].piece.status !== "placed") return error("you can't pick up a piece that is not placed");
-    if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error("you can't pick up your opponent's piece");
+    if (!this.grid[i][j].piece) return error(`there is no piece here to pick up [${i}, ${j}]`);
+    if (this.grid[i][j].piece.status !== "placed") return error(`you can't pick up a piece that is not placed [${i}, ${j}]`);
+    if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error(`you can't pick up your opponent's piece [${i}, ${j}]`);
+    this.cancelPickUp();
     this.pickedUpPiece = this.grid[i][j].piece;
     this.pickedUpPiece.status = "up";
-    return { success: true };
-  }
-
-  cancelPickUp() {
-    if (!this.pickedUpPiece || this.pickedUpPiece.status !== "up") return false;
-    this.pickedUpPiece.status = "placed";
-    this.pickedUpPiece = null;
     return true;
   }
 
+  /**
+   * Cancels the pick-up action.
+   */
+  cancelPickUp() {
+    if (!this.pickedUpPiece || this.pickedUpPiece.status !== "up") return;
+    this.pickedUpPiece.status = "placed";
+    this.pickedUpPiece = null;
+  }
+
   print(includeInfo = false) {
+    if (!includeInfo) console.log(this.#gridString());
     let str = "";
-    if (includeInfo) {
-      str += `Level: ${this.level}\n`;
-      str += `Phase: ${this.phase}\n`;
-      str += `Turn: ${this.players[this.turn].username} \n`;
-      str += `Players: ${this.players[0].username} vs ${this.players[1].username} \n`;
-      str += this.players[0].toString();
-      str += this.players[1].toString();
-    }
-    str += this.#gridString();
+    str += `Level: ${this.level}\n`;
+    str += `Phase: ${this.phase}\n`;
+    str += `Players: ${this.players[0].username} vs ${this.players[1].username} \n`;
+    str += this.players[0].toString();
+    str += this.players[1].toString();
+    str += `Turn: ${this.players[this.turn].username} (${this.players[this.turn].symbol}) \n`;
+    str += this.#gridString() + "\n";
+    str += "Pieces:\n";
+    this.grid.forEach((row) => {
+      row.forEach((cell) => {
+        if (cell.isRelevant && cell.piece) {
+          str += `\t(${cell.piece.coords[0]}, ${cell.piece.coords[1]}) ${cell.piece.symbol} ${cell.piece.status}\n`;
+        }
+      });
+    });
     console.log(str);
   }
 
