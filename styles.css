@@ -307,7 +307,6 @@ footer .container {
   border: 2px solid black;
 }
 
-
 .dark {
   background-color: var(--primary-color);
   color: var(--background-color);
@@ -318,6 +317,32 @@ footer .container {
   background-color: var(--terciary-color);
   color: var(--primary-color);
 }
+
+/* Grid area classes */
+.cell[class*="a7"] { grid-area: a7; }
+.cell[class*="b7"] { grid-area: b7; }
+.cell[class*="c7"] { grid-area: c7; }
+.cell[class*="a6"] { grid-area: a6; }
+.cell[class*="b6"] { grid-area: b6; }
+.cell[class*="c6"] { grid-area: c6; }
+.cell[class*="a5"] { grid-area: a5; }
+.cell[class*="b5"] { grid-area: b5; }
+.cell[class*="c5"] { grid-area: c5; }
+.cell[class*="a4"] { grid-area: a4; }
+.cell[class*="b4"] { grid-area: b4; }
+.cell[class*="c4"] { grid-area: c4; }
+.cell[class*="e4"] { grid-area: e4; }
+.cell[class*="f4"] { grid-area: f4; }
+.cell[class*="g4"] { grid-area: g4; }
+.cell[class*="e5"] { grid-area: e5; }
+.cell[class*="f5"] { grid-area: f5; }
+.cell[class*="g5"] { grid-area: g5; }
+.cell[class*="e6"] { grid-area: e6; }
+.cell[class*="f6"] { grid-area: f6; }
+.cell[class*="g6"] { grid-area: g6; }
+.cell[class*="e7"] { grid-area: e7; }
+.cell[class*="f7"] { grid-area: f7; }
+.cell[class*="g7"] { grid-area: g7; }
 
 .line {
   position: absolute;

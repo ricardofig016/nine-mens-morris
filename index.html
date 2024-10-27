@@ -50,9 +50,7 @@
 
     <section id="about-section">
       <h1>This is the About section</h1>
-      <p>
-        Work performed for TW2425 multi-sprint project.
-      </p>
+      <p>Work performed for TW2425 multi-sprint project.</p>
 
       <div id="instructions-modal" class="modal">
         <!-- instruções -->
@@ -60,8 +58,8 @@
           <span id="close-modal-btn" class="btn-primary header-btn close-btn">&times;</span>
           <h2>Regras do Jogo Trilha</h2>
           <p>
-            O Jogo Trilha é um jogo de tabuleiro de <br><code>n x n x n (n = {2,3,4,5})</code><br> pontos conectados por linhas. O objetivo é formar "moinhos", que são três peças do mesmo jogador em uma linha reta (não contam
-            diagonais).
+            O Jogo Trilha é um jogo de tabuleiro de <br /><code>n x n x n (n = {2,3,4,5})</code><br />
+            pontos conectados por linhas. O objetivo é formar "moinhos", que são três peças do mesmo jogador em uma linha reta (não contam diagonais).
           </p>
           <ul>
             <li>Criar o maior número possível de "moinhos".</li>
@@ -71,7 +69,9 @@
           <h3>Fases do Jogo:</h3>
           <ol>
             <li><strong>Fase 1:</strong> Colocar as peças no tabuleiro. Cada jogador coloca uma peça por turno.</li>
-            <li><strong>Fase 2:</strong> Movimentar as peças. Após todas as peças serem colocadas, os jogadores podem mover uma peça para uma casa adjacente.</li>
+            <li>
+              <strong>Fase 2:</strong> Movimentar as peças. Após todas as peças serem colocadas, os jogadores podem mover uma peça para uma casa adjacente.
+            </li>
             <li><strong>Fase 3:</strong> Fase de "voo". Se um jogador tiver apenas três peças, pode mover suas peças para qualquer posição no tabuleiro.</li>
           </ol>
           <p>Formar um moinho permite remover uma peça do oponente. O jogo termina quando um jogador não pode mais fazer movimentos válidos.</p>
@@ -151,42 +151,39 @@
     <section id="board-section">
       <div class="board">
         <!-- Camada externa -->
-        <div class="cell empty" style="grid-area: a7;"></div>
-        <div class="cell empty" style="grid-area: b7;"></div>
-        <div class="cell empty" style="grid-area: c7;"></div>
-        <div class="cell empty" style="grid-area: a4;"></div>
-        <div class="cell empty" style="grid-area: g4;"></div>
-        <div class="cell empty" style="grid-area: e7;"></div>
-        <div class="cell clear" style="grid-area: f7;"></div>
-        <div class="cell empty" style="grid-area: g7;"></div>
+        <div class="cell empty a7"></div>
+        <div class="cell empty b7"></div>
+        <div class="cell empty c7"></div>
+        <div class="cell empty a4"></div>
+        <div class="cell empty g4"></div>
+        <div class="cell empty e7"></div>
+        <div class="cell clear f7"></div>
+        <div class="cell empty g7"></div>
 
         <!-- Camada intermediária -->
-        <div class="cell empty" style="grid-area: a6;"></div>
-        <div class="cell empty" style="grid-area: b6;"></div>
-        <div class="cell dark" style="grid-area: c6;"></div>
-        <div class="cell dark" style="grid-area: f4;"></div>
-        <div class="cell dark" style="grid-area: b4;"></div>
-        <div class="cell dark" style="grid-area: e6;"></div>
-        <div class="cell clear" style="grid-area: f6;"></div>
-        <div class="cell dark" style="grid-area: g6;"></div>
+        <div class="cell empty a6"></div>
+        <div class="cell empty b6"></div>
+        <div class="cell dark c6"></div>
+        <div class="cell dark f4"></div>
+        <div class="cell dark b4"></div>
+        <div class="cell dark e6"></div>
+        <div class="cell clear f6"></div>
+        <div class="cell dark g6"></div>
 
         <!-- Camada interna -->
-        <div class="cell empty" style="grid-area: a5;"></div>
-        <div class="cell empty" style="grid-area: b5;"></div>
-        <div class="cell clear" style="grid-area: c5;"></div>
-        <div class="cell empty" style="grid-area: e5;"></div>
-        <div class="cell dark" style="grid-area: c4;"></div>
-        <div class="cell clear" style="grid-area: e4;"></div>
-        <div class="cell empty" style="grid-area: f5;"></div>
-        <div class="cell clear" style="grid-area: g5;"></div>
+        <div class="cell empty a5"></div>
+        <div class="cell empty b5"></div>
+        <div class="cell clear c5"></div>
+        <div class="cell empty e5"></div>
+        <div class="cell dark c4"></div>
+        <div class="cell clear e4"></div>
+        <div class="cell empty f5"></div>
+        <div class="cell clear g5"></div>
       </div>
       <div class="player-box clear">
         Player 1's turn
-        <div class="player-box">
-          00 : 00
-        </div>
+        <div class="player-box">00 : 00</div>
       </div>
-      
     </section>
 
     <footer>
