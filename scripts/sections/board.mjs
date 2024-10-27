@@ -1,5 +1,6 @@
 import Section from "./section.mjs";
 import Game from "../game/game.mjs";
+import error from "../error.mjs";
 
 class Board extends Section {
   constructor() {
@@ -44,9 +45,9 @@ class Board extends Section {
       const target = event.target;
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
-      if (game.grid[i][j].piece) {
+      if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
-        else if (game.phase === "taking") console.log("taking is not implemented yet");
+        else if (game.phase === "taking") error("taking is not implemented yet");
       } else game.place(i, j);
       this.render(game);
     });
