@@ -22,7 +22,7 @@ class Game {
     this.#hideNotRelevantCells();
     this.pieceAmount = levels[this.level].pieces;
     this.#definePlayers(username1, username2, shufflePlayers);
-    this.phase = "placing"; // can be "placing" or "moving"
+    this.phase = "placing"; // can be "placing", "moving" or "taking"
     this.turn = 0; // 0 for player X, 1 for player O
     this.pickedUpPiece = null;
   }
@@ -71,11 +71,11 @@ class Game {
    * @returns {boolean} Whether the piece was picked up successfully.
    */
   pickUp(i, j) {
+    this.cancelPickUp();
     if (this.phase !== "moving") return error("you can only pick up a piece in the moving phase");
     if (!this.grid[i][j].piece) return error(`there is no piece here to pick up [${i}, ${j}]`);
     if (this.grid[i][j].piece.status !== "placed") return error(`you can't pick up a piece that is not placed [${i}, ${j}]`);
     if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error(`you can't pick up your opponent's piece [${i}, ${j}]`);
-    this.cancelPickUp();
     this.pickedUpPiece = this.grid[i][j].piece;
     this.pickedUpPiece.status = "up";
     return true;

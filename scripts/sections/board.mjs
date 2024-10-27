@@ -26,8 +26,10 @@ class Board extends Section {
       row.forEach((cell, j) => {
         if (cell.isRelevant) {
           const cellElement = document.createElement("div");
+          const gridAreaClass = `${String.fromCharCode(97 + i)}${j + 1}`;
           const colorClass = cell.piece ? (cell.piece.symbol === "X" ? "clear" : "dark") : "empty";
-          cellElement.className = `cell ${colorClass} ${String.fromCharCode(97 + i)}${j + 1}`;
+          const isPickedUpClass = game.pickedUpPiece && game.pickedUpPiece.coords[0] === i && game.pickedUpPiece.coords[1] === j ? "picked-up" : "";
+          cellElement.className = `cell ${colorClass} ${gridAreaClass} ${isPickedUpClass}`;
           boardElement.appendChild(cellElement);
         }
       });
@@ -42,12 +44,11 @@ class Board extends Section {
       const target = event.target;
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
-      if (game.phase === "placing") {
-        game.place(i, j);
-      } else if (game.phase === "moving") {
-        game.move(i, j);
-      }
-      this.render(game); // Re-render the board after the game state changes
+      if (game.grid[i][j].piece) {
+        if (game.phase === "moving") game.pickUp(i, j);
+        else if (game.phase === "taking") console.log("taking is not implemented yet");
+      } else game.place(i, j);
+      this.render(game);
     });
   }
 
