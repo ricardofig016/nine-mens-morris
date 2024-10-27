@@ -128,7 +128,7 @@ footer .container {
   justify-content: center;
 }
 
-.player-text{
+.player-text {
   color: #332211 !important;
 }
 
@@ -291,6 +291,7 @@ footer .container {
   position: relative;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  place-items: center;
 }
 
 #board.mini {
