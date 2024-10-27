@@ -128,6 +128,10 @@ footer .container {
   justify-content: center;
 }
 
+.player-text{
+  color: #332211 !important;
+}
+
 #main-logo {
   width: 150px;
   margin-bottom: 10px;
@@ -266,7 +270,7 @@ footer .container {
 
 .player-box {
   margin-top: 4px;
-  border: 4px solid black;
+  border: 2px solid black;
   padding-left: 15px;
   padding-right: 15px;
   padding-bottom: 5px;
@@ -282,8 +286,8 @@ footer .container {
   background-color: var(--secondary-background-color);
   padding: 20px;
   border: 2px solid black;
-  width: 40rem;
-  height: 40rem;
+  width: 30rem;
+  height: 30rem;
   position: relative;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
@@ -314,8 +318,8 @@ footer .container {
 }
 
 .cell {
-  width: 100%;
-  height: 100%;
+  width: 80%;
+  height: 80%;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -336,11 +340,13 @@ footer .container {
 .dark {
   background-color: var(--primary-color);
   color: var(--background-color);
+  transition: 0.5s ease-out;
 }
 
 .clear {
   background-color: var(--terciary-color);
   color: var(--primary-color);
+  transition: 0.5s ease-out;
 }
 
 /* Grid area classes */
