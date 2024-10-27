@@ -36,10 +36,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   initializeInstructionsModal();
 
-  // example of how to use the error function
+  /*// example of how to use the error function
   error("This is an error message");
 
   // example of how to manually create toasts
   const toast = new Toast("This is a toast message");
-  toast.show();
+  toast.show();*/
 });

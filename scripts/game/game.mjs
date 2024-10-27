@@ -106,15 +106,18 @@ class Game {
   // private methods
 
   #flipTurn() {
+    var place = new Audio('/assets/audio/piece-placement.mp3');
     this.turn = 1 - this.turn;
     if(this.turn){
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
       document.getElementById("whoisplaying2").innerHTML="Player 2's turn";
+      place.play();
     }else{
       document.getElementById("whoisplaying").classList.remove("dark");
       document.getElementById("whoisplaying").classList.add("clear");
       document.getElementById("whoisplaying2").innerHTML="Player 1's turn";
+      place.play();
     }
   }
 
