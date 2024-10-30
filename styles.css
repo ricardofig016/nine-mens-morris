@@ -1,13 +1,13 @@
 @font-face {
   font-family: "Roboto";
-  src: url("../assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
+  src: url("assets/fonts/Roboto/Roboto-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Roboto";
-  src: url("../assets/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
+  src: url("assets/fonts/Roboto/Roboto-Bold.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
@@ -46,7 +46,7 @@ body {
   letter-spacing: 0.03em;
   word-spacing: 0.1em;
   line-height: 1.6;
-  background-image: url("../assets/background.png");
+  background-image: url("assets/background.png");
   background-repeat: no-repeat;
   background-size: cover;
 }
