@@ -116,7 +116,7 @@ class Game {
   // private methods
 
   #flipTurn() {
-    var place = new Audio("assets/audio/piece-placement.mp3");
+    var place = new Audio("./assets/audio/piece-placement.mp3");
     this.turn = 1 - this.turn;
     if (this.turn) {
       document.getElementById("whoisplaying").classList.remove("clear");
