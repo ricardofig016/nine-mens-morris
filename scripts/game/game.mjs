@@ -25,6 +25,7 @@ class Game {
     this.phase = "placing"; // can be "placing", "moving" or "taking"
     this.turn = 0; // 0 for player X, 1 for player O
     this.pickedUpPiece = null;
+    this.result = null; // can be "X", "O" or "draw"
   }
 
   // public methods
@@ -42,8 +43,7 @@ class Game {
     if (this.phase === "placing") {
       // placing phase
       if (this.grid[i][j].piece) return error(`there is already a piece here [${i}, ${j}]`);
-      this.grid[i][j].piece = new Piece(this.players[this.turn].symbol, i, j);
-      this.grid[i][j].piece.status = "placed";
+      this.grid[i][j].piece = new Piece(this.players[this.turn].symbol, i, j, "placed");
       this.players[this.turn].inHandPieces--;
       this.players[this.turn].alivePieces++;
       if (this.players[0].inHandPieces === 0 && this.players[1].inHandPieces === 0) this.phase = "moving";
@@ -51,14 +51,16 @@ class Game {
       // moving phase
       if (!this.pickedUpPiece) return error("you need to pick up a piece first");
       if (this.grid[i][j].piece) return error(`there is already a piece here [${i}, ${j}]`);
+      if (!this.#canMove(i, j)) return error(`you can't move here because you have more than 3 pieces [${i}, ${j}]`);
       this.grid[this.pickedUpPiece.coords[0]][this.pickedUpPiece.coords[1]].piece = null;
       this.grid[i][j].piece = this.pickedUpPiece;
       this.pickedUpPiece = null;
       this.grid[i][j].piece.status = "placed";
       this.grid[i][j].piece.updateCoords(i, j);
     }
-    if (this.#checkMill(i, j)) console.log("Mill formed on", [i, j]);
-    this.#flipTurn();
+    this.#hasUnmilledPieces(this.turn);
+    if (this.#checkMill(i, j)) this.phase = "taking";
+    else this.#flipTurn();
     return true;
   }
 
@@ -71,23 +73,31 @@ class Game {
    * @returns {boolean} Whether the piece was picked up successfully.
    */
   pickUp(i, j) {
-    this.cancelPickUp();
+    this.#cancelPickUp();
     if (this.phase !== "moving") return error("you can only pick up a piece in the moving phase");
     if (!this.grid[i][j].piece) return error(`there is no piece here to pick up [${i}, ${j}]`);
     if (this.grid[i][j].piece.status !== "placed") return error(`you can't pick up a piece that is not placed [${i}, ${j}]`);
     if (this.grid[i][j].piece.symbol !== this.players[this.turn].symbol) return error(`you can't pick up your opponent's piece [${i}, ${j}]`);
     this.pickedUpPiece = this.grid[i][j].piece;
-    this.pickedUpPiece.status = "up";
+    this.pickedUpPiece.status = "picked up";
     return true;
   }
 
-  /**
-   * Cancels the pick-up action.
-   */
-  cancelPickUp() {
-    if (!this.pickedUpPiece || this.pickedUpPiece.status !== "up") return;
-    this.pickedUpPiece.status = "placed";
-    this.pickedUpPiece = null;
+  take(i, j) {
+    if (!this.#inBounds(i, j)) return error(`coordinates out of bounds [${i}, ${j}]`);
+    if (!this.grid[i][j].isRelevant) return error(`you can't take a piece here, this cell is not relevant [${i}, ${j}]`);
+    if (this.phase !== "taking") return error("you can only take a piece in the taking phase");
+    if (!this.grid[i][j].piece) return error(`there is no piece here to take [${i}, ${j}]`);
+    if (this.grid[i][j].piece.symbol === this.players[this.turn].symbol) return error(`you can't take your own piece [${i}, ${j}]`);
+    if (this.#checkMill(i, j) && this.#hasUnmilledPieces(1 - this.turn))
+      return error(`you can't take a piece that is part of a mill when your opponent has other pieces available [${i}, ${j}]`);
+    this.grid[i][j].piece = null;
+    this.players[1 - this.turn].alivePieces--;
+    this.players[1 - this.turn].takenPieces++;
+    if (this.players[1 - this.turn].alivePieces < 3 && this.players[1 - this.turn].inHandPieces === 0) return (this.result = this.players[this.turn].symbol);
+    this.phase = this.players[0].inHandPieces === 0 && this.players[1].inHandPieces === 0 ? "moving" : "placing";
+    this.#flipTurn();
+    return true;
   }
 
   print(includeInfo = false) {
@@ -201,6 +211,17 @@ class Game {
   }
 
   /**
+   * @private
+   * Cancels the pick-up action.
+   */
+  #cancelPickUp() {
+    if (!this.pickedUpPiece || this.pickedUpPiece.status !== "picked up") return;
+    this.pickedUpPiece.status = "placed";
+    this.pickedUpPiece = null;
+  }
+
+  /**
+   * @private
    * Checks if placing a piece at the given coordinates forms a mill.
    *
    * A mill is formed when three pieces of the same symbol are aligned either horizontally, vertically, or diagonally.
@@ -241,6 +262,30 @@ class Game {
     };
     for (const [first, second] of millCheckOffsets)
       if (checkMillWith(nextRelevantCell([i, j], first.offset, first.distance), nextRelevantCell([i, j], second.offset, second.distance))) return true;
+    return false;
+  }
+
+  #canMove(i, j) {
+    if (this.players[this.turn].alivePieces <= 3) return true;
+    const connection = this.#sortConnection(this.pickedUpPiece.coords, [i, j]);
+    return this.connections.some((c) => c.toString() === connection.toString());
+  }
+
+  /**
+   * @private
+   * Checks if the player has any unmilled pieces.
+   *
+   * @param {number} player the player index  (0 for player X, 1 for player O)
+   * @returns {boolean} whether the player has any unmilled pieces
+   */
+  #hasUnmilledPieces(player) {
+    for (let i = 0; i < this.size; i++) {
+      for (let j = 0; j < this.size; j++) {
+        if (this.grid[i][j].piece && this.grid[i][j].piece.symbol === this.players[player].symbol) {
+          if (!this.#checkMill(i, j)) return true;
+        }
+      }
+    }
     return false;
   }
 

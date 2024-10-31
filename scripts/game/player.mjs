@@ -10,14 +10,14 @@ class Player {
     this.symbol = symbol;
     this.inHandPieces = pieceAmount;
     this.alivePieces = 0;
-    this.deadPieces = 0;
+    this.takenPieces = 0;
   }
 
   toString() {
     let str = `\t${this.username} (${this.symbol}):\n`;
     str += `\t\tIn hand: ${this.inHandPieces} pieces\n`;
     str += `\t\tAlive: ${this.alivePieces} pieces\n`;
-    str += `\t\tDead: ${this.deadPieces} pieces\n`;
+    str += `\t\tDead: ${this.takenPieces} pieces\n`;
     return str;
   }
 }

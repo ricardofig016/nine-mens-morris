@@ -35,7 +35,13 @@ class Board extends Section {
         }
       });
     });
+    if (game.result) this.gameEnd(game.result);
     game.print(true);
+  }
+
+  gameEnd(result) {
+    // TODO: do sth prettier
+    error("result: " + result);
   }
 
   addListeners(game) {
@@ -47,7 +53,7 @@ class Board extends Section {
       const [i, j] = this.getCellCoordinates(target);
       if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
-        else if (game.phase === "taking") error("taking is not implemented yet");
+        else if (game.phase === "taking") game.take(i, j);
       } else game.place(i, j);
       this.render(game);
     });
