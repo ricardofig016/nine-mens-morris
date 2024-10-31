@@ -1,2 +1,13 @@
 # vscode prettier config file
 .prettierrc
+
+# npm
+node_modules
+package-lock.json
+package.json
+
+# build tools
+webpack.config.js
+
+# distribution
+dist
