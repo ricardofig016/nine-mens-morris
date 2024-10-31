@@ -1,5 +1,5 @@
 class Toast {
-  constructor(message, duration = 5000) {
+  constructor(message, duration = 4000) {
     this.message = message;
     this.duration = duration;
     this.toastElement = null;
@@ -9,6 +9,9 @@ class Toast {
     this.toastElement = document.createElement("div");
     this.toastElement.className = "toast";
     this.toastElement.textContent = this.message;
+    this.toastElement.addEventListener("click", () => {
+      this.hide();
+    });
     document.body.appendChild(this.toastElement);
 
     setTimeout(() => {

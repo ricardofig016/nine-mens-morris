@@ -600,6 +600,7 @@ footer .container {
   padding: 1.3rem 3.5rem;
   position: fixed;
   z-index: 10;
+  cursor: pointer;
   left: 2rem;
   top: 13rem;
   font-size: 1.3rem;
@@ -614,17 +615,16 @@ footer .container {
 }
 
 #instructions-modal {
-  display: none; /* Hidden by default */
+  display: none;
   position: fixed;
-  z-index: 1000; /* Ensure it overlays content */
+  z-index: 5;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
-/* Modal content styling */
 .modal-content {
   background-color: var(--secondary-background-color);
   margin: 5% auto;
