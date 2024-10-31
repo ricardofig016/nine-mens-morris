@@ -14,7 +14,7 @@ const sections = {
 };
 
 const config = {
-  level: "small",
+  level: "normal",
   player1: "Alice",
   player2: "Bob",
   shufflePlayers: true,
