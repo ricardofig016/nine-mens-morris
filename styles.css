@@ -161,6 +161,18 @@ footer .container {
   cursor: pointer;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
+.btn-sm {
+  color: var(--background-color);
+  height: 2.5rem !important;
+  font-size: 0.9rem !important;
+  padding: 0px !important;
+  font-weight: normal;
+  text-align: center;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
 
 .btn-primary {
   background-color: var(--primary-color);
@@ -171,7 +183,8 @@ footer .container {
 }
 
 .btn-primary:not(.active),
-.btn-secondary:not(.active) {
+.btn-secondary:not(.active),
+.btn-sm:not(.active) {
   background-color: var(--background-color);
   color: var(--primary-color);
   cursor: default;
@@ -179,13 +192,15 @@ footer .container {
 }
 
 .btn-primary.active:hover,
-.btn-secondary.active:hover {
+.btn-secondary.active:hover,
+.btn-sm.active:hover {
   transform: scale(1.05);
   transition: transform 0.2s ease;
 }
 
 .btn-primary.active:active,
-.btn-secondary.active:active {
+.btn-secondary.active:active,
+.btn-sm.active:active {
   transform: scale(0.95);
   transition: transform 0.07s ease;
 }
@@ -644,4 +659,34 @@ footer .container {
   font-size: 28px;
   color: var(--secondary-background-color);
   cursor: pointer;
+}
+
+#ratings-modal {
+  display: none;
+  position: fixed;
+  z-index: 5;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 28px;
+  color: var(--secondary-background-color);
+  cursor: pointer;
+}
+
+#show-ratings-btn{
+  width: 100%;
+  height: 100%;
+}
+
+.scoreboard{
+  margin-left: auto !important;
+  margin-right: auto !important;
 }

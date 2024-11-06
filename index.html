@@ -24,7 +24,7 @@
               <button type="button" class="btn-primary header-btn" id="to-login-button">Login</button>
             </li>
             <li>
-              <button type="button" class="btn-primary header-btn" id="to-board-button">Play</button>
+              <button type="button" class="btn-primary header-btn" id="to-settings-button">Play</button>
             </li>
           </ul>
         </nav>
@@ -148,12 +148,59 @@
       </div>
     </section>
 
+    <section id="settings-section">
+      <h1>Game Settings</h1>
+      <p>
+        You're an inch away from starting, choose the difficulty below :)
+      </p>
+      <div class="player-box clear">
+        <button type="button" class="btn-primary active">Easy</button>
+        <button type="button" class="btn-primary active" id="to-board-button">Hard</button>
+      </div>
+    </section>
+
     <section id="board-section">
       <div id="board"></div>
-      <div class="player-box clear" id="whoisplaying">
-        <span id="whoisplaying2">Player 1's turn</span>
-        <div class="player-box player-text">00 : 00</div>
+      <table>
+        <tr>
+          <th>
+            <div class="player-box clear" id="whoisplaying">
+              <span id="whoisplaying2">Player 1's turn</span>
+              <div class="player-box player-text">00 : 00</div>
+            </div>
+          </th>
+          <th>
+            <div class="player-box clear">
+              <span id="whoisplaying2">See the score table</span>
+              <button type="button" class="btn-sm btn-primary active" id="show-ratings-btn">Show player scores</button>
+            </div>
+          </th>
+        </tr>
+      </table>
+      <div id="ratings-modal" class="modal">
+        <div class="modal-content scoreboard">
+          <span id="ratings-close-modal-btn" class="btn-primary header-btn close-btn">&times;</span>
+          <h2>Score Board</h2>
+          <table class="scoreboard player-box" class="player-box">
+            <tr>
+              <th>Game</th>
+              <th>Who won?</th>
+              <th>Time</th>
+            </tr>
+            <tr>
+              <td>Game 1</td>
+              <td>Computer</td>
+              <td>00:00:00</td>
+            </tr>
+            <tr>
+              <td>Game 2</td>
+              <td>Computer</td>
+              <td>00:00:00</td>
+            </tr>
+          </table>
+        </div>
       </div>
+      
     </section>
 
     <footer>
