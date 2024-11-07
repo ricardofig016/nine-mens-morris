@@ -1,5 +1,6 @@
 import Player from "./player.mjs";
 import Piece from "./piece.mjs";
+import AutoPlayer from "./autoplayer.mjs"
 import levels from "./levels.mjs";
 import millCheckOffsets from "./millCheckOffsets.mjs";
 import error from "../error.mjs";
@@ -59,7 +60,7 @@ class Game {
       this.grid[i][j].piece.updateCoords(i, j);
     }
     this.#hasUnmilledPieces(this.turn);
-    if (this.#checkMill(i, j)) this.phase = "taking";
+    if (this.checkMill(i, j)) this.phase = "taking";
     else this.#flipTurn();
     return true;
   }
@@ -89,7 +90,7 @@ class Game {
     if (this.phase !== "taking") return error("you can only take a piece in the taking phase");
     if (!this.grid[i][j].piece) return error(`there is no piece here to take [${i}, ${j}]`);
     if (this.grid[i][j].piece.symbol === this.players[this.turn].symbol) return error(`you can't take your own piece [${i}, ${j}]`);
-    if (this.#checkMill(i, j) && this.#hasUnmilledPieces(1 - this.turn))
+    if (this.checkMill(i, j) && this.#hasUnmilledPieces(1 - this.turn))
       return error(`you can't take a piece that is part of a mill when your opponent has other pieces available [${i}, ${j}]`);
     this.grid[i][j].piece = null;
     this.players[1 - this.turn].alivePieces--;
@@ -114,15 +115,18 @@ class Game {
   }
 
   // private methods
+  
 
   #flipTurn() {
     var place = new Audio("./assets/audio/piece-placement.mp3");
     this.turn = 1 - this.turn;
     if (this.turn) {
+      const autoPlayer = new AutoPlayer(Game);
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
       document.getElementById("whoisplaying2").innerHTML = "Player 2's turn";
-      place.play();
+      autoPlayer.playRandomMove();
+      
     } else {
       document.getElementById("whoisplaying").classList.remove("dark");
       document.getElementById("whoisplaying").classList.add("clear");
@@ -203,11 +207,7 @@ class Game {
    * @param {boolean} shufflePlayers whether to shuffle the players or not
    */
   #definePlayers(username1, username2, shufflePlayers) {
-    if (shufflePlayers && Math.random() < 0.5) {
-      this.players = [new Player(username2, "X", this.pieceAmount), new Player(username1, "O", this.pieceAmount)];
-    } else {
-      this.players = [new Player(username1, "X", this.pieceAmount), new Player(username2, "O", this.pieceAmount)];
-    }
+    this.players = [new Player(username1, "X", this.pieceAmount), new Player(username2, "O", this.pieceAmount)];
   }
 
   /**
@@ -221,7 +221,7 @@ class Game {
   }
 
   /**
-   * @private
+   * @public
    * Checks if placing a piece at the given coordinates forms a mill.
    *
    * A mill is formed when three pieces of the same symbol are aligned either horizontally, vertically, or diagonally.
@@ -231,7 +231,7 @@ class Game {
    * @param {number} j - The column index of the piece.
    * @returns {boolean} - Returns true if a mill is formed, otherwise false.
    */
-  #checkMill(i, j) {
+  checkMill(i, j) {
     const nextRelevantCell = ([i, j], [iOffset, jOffset], distance = 1) => {
       let iNew = i + iOffset;
       let jNew = j + jOffset;
@@ -282,7 +282,7 @@ class Game {
     for (let i = 0; i < this.size; i++) {
       for (let j = 0; j < this.size; j++) {
         if (this.grid[i][j].piece && this.grid[i][j].piece.symbol === this.players[player].symbol) {
-          if (!this.#checkMill(i, j)) return true;
+          if (!this.checkMill(i, j)) return true;
         }
       }
     }

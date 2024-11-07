@@ -1,5 +1,6 @@
 import Section from "./section.mjs";
 import Game from "../game/game.mjs";
+import AutoPlayer from "../game/autoplayer.mjs";
 import error from "../error.mjs";
 
 class Board extends Section {
@@ -14,6 +15,7 @@ class Board extends Section {
   load({ level, player1, player2, shufflePlayers }) {
     super.load();
     const game = new Game(level, player1, player2, shufflePlayers);
+    this.autoPlayer = new AutoPlayer(game); // Initialize AutoPlayer
     this.render(game);
     this.addListeners(game);
   }
@@ -51,11 +53,22 @@ class Board extends Section {
       const target = event.target;
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
+      
+      // Handle human player move
       if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
         else if (game.phase === "taking") game.take(i, j);
       } else game.place(i, j);
+
       this.render(game);
+
+      // Check if it's Bob's turn (AutoPlayer) after each human move
+      if (game.players[game.turn].username === "Bob") {
+        setTimeout(() => {
+          this.autoPlayer.playRandomMove(); // Bob plays
+          this.render(game); // Re-render after Bob's move
+        }, 500); // Optional delay for a more natural feel
+      }
     });
   }
 
