@@ -258,6 +258,34 @@ footer .container {
 #signup-section input:focus {
   outline: none;
 }
+.custom-checkbox input[type="checkbox"] {
+  display: none;
+}
+
+.custom-checkbox {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.custom-checkbox .checkmark {
+  width: 18px;
+  height: 18px;
+  background-color: var(--primary-color);
+  border-radius: 3px;
+  margin-right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
+  content: '✓';
+  color: white;
+}
 
 #toggle-password-vis-login,
 #toggle-password-vis-signup {
@@ -713,4 +741,5 @@ footer .container {
 .scoreboard{
   margin-left: auto !important;
   margin-right: auto !important;
+  width: 70%;
 }

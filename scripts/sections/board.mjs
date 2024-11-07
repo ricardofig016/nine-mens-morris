@@ -50,8 +50,14 @@ class Board extends Section {
   }
 
   gameEnd(result) {
-    // TODO: do sth prettier
-    error("result: " + result);
+    if(result=="X"){
+      error("Player 1 Won!");
+      document.getElementById("scoring").innerHTML+="<tr><td>9 Men's Morris</td><td>Player 1</td><td>00:00:00</td></tr>"
+    }else{
+      error("Player 2 Won!");
+      document.getElementById("scoring").innerHTML+="<tr><td>9 Men's Morris</td><td>Player 2</td><td>00:00:00</td></tr>"
+    }
+    
   }
 
   addListeners(game) {

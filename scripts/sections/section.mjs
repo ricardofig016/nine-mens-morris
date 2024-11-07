@@ -32,6 +32,7 @@ class Section {
     // deactivate the specified section's header button
     const button = document.querySelector(`#to-${this.name}-button`);
     if (button) {
+      try{var type = document.querySelector(`#to-board-button-${type}`);}catch{}
       button.classList.remove("active");
     }
   }

@@ -149,12 +149,17 @@
     <section id="settings-section">
       <h1>Game Settings</h1>
       <p>
-        You're an inch away from starting, choose the difficulty below :)
+        You're an inch away from starting :)
       </p>
       <div class="player-box clear">
-        <button type="button" class="btn-primary header-btn">Easy</button>
-        <button type="button" class="btn-primary header-btn" id="to-board-button">Hard</button>
+        <label class="custom-checkbox">
+          <input type="checkbox" id="nohuman" checked="true">
+          <span class="checkmark"></span>
+          I want to play vs the computer.
+        </label>
+        <button type="button" class="btn-primary header-btn" id="to-board-button">Let's Go!</button>
       </div>
+      
     </section>
 
     <section id="board-section">
@@ -185,16 +190,12 @@
               <th>Who won?</th>
               <th>Time</th>
             </tr>
+            <!-- example:
             <tr>
               <td>Game 1</td>
               <td>Player 2</td>
               <td>00:00:00</td>
-            </tr>
-            <tr>
-              <td>Game 2</td>
-              <td>Player 2</td>
-              <td>00:00:00</td>
-            </tr>
+            </tr>-->
           </table>
         </div>
       </div>
