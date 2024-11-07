@@ -54,7 +54,6 @@ class Board extends Section {
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
       
-      // Handle human player move
       if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
         else if (game.phase === "taking") game.take(i, j);
@@ -62,12 +61,14 @@ class Board extends Section {
 
       this.render(game);
 
-      // Check if it's Bob's turn (AutoPlayer) after each human move
+      
       if (game.players[game.turn].username === "Bob") {
+        boardElement.disabled = true;
         setTimeout(() => {
           this.autoPlayer.playRandomMove(); // Bob plays
-          this.render(game); // Re-render after Bob's move
-        }, 500); // Optional delay for a more natural feel
+          this.render(game); 
+        }, 500); 
+        boardElement.disabled = false;
       }
     });
   }

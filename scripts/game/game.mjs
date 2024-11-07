@@ -102,6 +102,7 @@ class Game {
   }
 
   print(includeInfo = false) {
+    document.getElementById("whatisplaying").innerHTML = this.phase;
     if (!includeInfo) console.log(this.#gridString());
     let str = "";
     str += `Level: ${this.level}\n`;
