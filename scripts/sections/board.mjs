@@ -61,25 +61,31 @@ class Board extends Section {
       const target = event.target;
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
-      
+  
       if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
         else if (game.phase === "taking") game.take(i, j);
-      } else game.place(i, j);
-
+      } else {
+        game.place(i, j);
+      }
+  
       this.render(game);
-
-      
+  
+      // Check if it's Bob's turn
       if (game.players[game.turn].username === "Bob") {
         boardElement.disabled = true;
+  
+        // Let AutoPlayer handle retries internally
         setTimeout(() => {
-          this.autoPlayer.playRandomMove(); // Bob plays
-          this.render(game); 
-        }, 500); 
-        boardElement.disabled = false;
+          this.autoPlayer.playRandomMove(); // Bob plays, with retries handled in AutoPlayer
+          this.render(game); // Re-render after Bob’s move
+          boardElement.disabled = false;
+        }, 500); // Initial delay for Bob's turn
       }
     });
   }
+  
+  
 
   getCellCoordinates(cellElement) {
     const classList = Array.from(cellElement.classList);

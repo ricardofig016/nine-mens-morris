@@ -23,7 +23,7 @@ const config = {
 };
 
 // show this section on page load
-const defaultSection = new Board(); // TODO: change this to Home when testing for Board is not needed
+const defaultSection = new Home();
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  defaultSection.load(config); // TODO: remove config when Home is the default section instead of Board
+  defaultSection.load();
 
   initializeInstructionsModal();
   initializeScoreboardModal();
