@@ -122,11 +122,9 @@ class Game {
     var place = new Audio("./assets/audio/piece-placement.mp3");
     this.turn = 1 - this.turn;
     if (this.turn) {
-      const autoPlayer = new AutoPlayer(Game);
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
       document.getElementById("whoisplaying2").innerHTML = "Player 2's turn";
-      autoPlayer.playRandomMove();
       
     } else {
       document.getElementById("whoisplaying").classList.remove("dark");

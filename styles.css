@@ -299,7 +299,6 @@ footer .container {
   display: grid;
   grid-gap: 10px;
   background-color: var(--secondary-background-color);
-  padding: 20px;
   border: 2px solid black;
   width: 30rem;
   height: 30rem;
@@ -307,6 +306,10 @@ footer .container {
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   place-items: center;
+  grid-template-columns: repeat(13, 1fr); /* 13 columns for both cells and lines */
+  grid-template-rows: repeat(13, 1fr); /* 13 rows for both cells and lines */
+  gap: 0;
+  padding: 10px; /* Padding to center the grid */
 }
 
 #board.mini {
@@ -334,14 +337,34 @@ footer .container {
 }
 
 .cell {
-  width: 80%;
-  height: 80%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 2px solid black;
+  grid-row: span 2;
+  grid-column: span 2;
   cursor: pointer;
+}
+
+.hline {
+  height: 2px;
+  width: 100%;
+  background-color: transparent;
+  border-top: 2px dashed black;
+  align-self: center;
+  justify-self: center;
+}
+
+.vline {
+  width: 2px;
+  height: 100%;
+  background-color: transparent;
+  border-left: 2px dashed black;
+  align-self: center;
+  justify-self: center;
 }
 
 .cell.picked-up {

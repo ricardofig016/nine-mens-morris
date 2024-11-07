@@ -33,6 +33,14 @@ class Board extends Section {
           const colorClass = cell.piece ? (cell.piece.symbol === "X" ? "clear" : "dark") : "empty";
           const isPickedUpClass = game.pickedUpPiece && game.pickedUpPiece.coords[0] === i && game.pickedUpPiece.coords[1] === j ? "picked-up" : "";
           cellElement.className = `cell ${colorClass} ${gridAreaClass} ${isPickedUpClass}`;
+          boardElement.appendChild(cellElement); 
+        } else{
+          const cellElement=document.createElement("span");
+          if(j===0 || j===6) cellElement.className = "vline";
+          else if((i===0 || i==6) && (j>0 && j<6)) cellElement.className = "hline";
+          else if((i===1 || i==5) && (j>1 && j<5)) cellElement.className = "hline";
+          else if((i===2 || i==4) && (j===1 || j===5)) cellElement.className = "vline";
+          // debug else cellElement.innerHTML=`i: ${i} / j: ${j}`
           boardElement.appendChild(cellElement);
         }
       });
