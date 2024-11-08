@@ -59,7 +59,8 @@
           <h2>Game Rules for Nine Men's Morris</h2>
           <p>
             Nine Men's Morris is a board game with an <br /><code>n x n x n (n = {2,3,4,5})</code><br />
-            grid of points connected by lines. The objective is to form "mills," which are three pieces of the same player in a straight line (diagonals don't count).
+            grid of points connected by lines. The objective is to form "mills," which are three pieces of the same player in a straight line (diagonals don't
+            count).
           </p>
           <ul>
             <li>Create as many "mills" as possible.</li>
@@ -69,9 +70,7 @@
           <h3>Game Phases:</h3>
           <ol>
             <li><strong>Phase 1:</strong> Placing pieces on the board. Each player places one piece per turn.</li>
-            <li>
-              <strong>Phase 2:</strong> Moving pieces. After all pieces are placed, players can move one piece to an adjacent spot.
-            </li>
+            <li><strong>Phase 2:</strong> Moving pieces. After all pieces are placed, players can move one piece to an adjacent spot.</li>
             <li><strong>Phase 3:</strong> "Flying" phase. If a player has only three pieces left, they can move their pieces to any position on the board.</li>
           </ol>
           <p>Forming a mill allows you to remove an opponent's piece. The game ends when a player can no longer make valid moves.</p>
@@ -148,27 +147,54 @@
 
     <section id="settings-section">
       <div class="form-container">
-        <h1>Game Settings</h1>
-        <p>
-          You're an inch away from starting :)
-        </p>
-        <div class="player-box clear">
-          <label class="custom-checkbox">
-            <input type="checkbox" id="9mm" checked="true" disabled>
-            <span class="checkmark"></span>
-            9 Men's Morris
-          </label>
-        </div>
-        <div class="player-box clear">
-          <label class="custom-checkbox">
-            <input type="checkbox" id="nohuman" checked="true">
-            <span class="checkmark"></span>
-            I want to play vs the computer.
-          </label>
-          <button type="button" class="btn-primary header-btn" id="to-board-button">Let's Go!</button>
-        </div>
+        <form id="settings-form">
+          <h1>Game Settings</h1>
+          <p>You're an inch away from starting :)</p>
+          <div class="player-box clear">
+            <label class="custom-checkbox">
+              <input type="radio" id="9mm" checked="true" disabled />
+              <span class="checkmark"></span>
+              9 Men's Morris
+            </label>
+          </div>
+          <div class="player-box clear">
+            <label class="custom-checkbox">
+              <input type="radio" value="human" name="player-mode" checked="true" />
+              <span class="checkmark"></span>
+              Play with a friend
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="nohuman" name="player-mode" />
+              <span class="checkmark"></span>
+              Play with the computer
+            </label>
+          </div>
+          <div class="player-box clear">
+            <label class="custom-checkbox">
+              <input type="radio" value="mini" name="level" />
+              <span class="checkmark"></span>
+              Mini
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="small" name="level" />
+              <span class="checkmark"></span>
+              Small
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="normal" name="level" checked="true" />
+              <span class="checkmark"></span>
+              Normal
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="big" name="level" />
+              <span class="checkmark"></span>
+              Big
+            </label>
+          </div>
+          <br />
+          <button type="submit" class="btn-primary header-btn">Let's Go!</button>
+        </form>
       </div>
-      
     </section>
 
     <section id="board-section">
@@ -208,7 +234,6 @@
           </table>
         </div>
       </div>
-      
     </section>
 
     <footer>

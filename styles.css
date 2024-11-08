@@ -258,7 +258,7 @@ footer .container {
 #signup-section input:focus {
   outline: none;
 }
-.custom-checkbox input[type="checkbox"] {
+.custom-checkbox input[type="radio"] {
   display: none;
 }
 
@@ -282,8 +282,8 @@ footer .container {
   cursor: pointer;
 }
 
-.custom-checkbox input[type="checkbox"]:checked + .checkmark::after {
-  content: '✓';
+.custom-checkbox input[type="radio"]:checked + .checkmark::after {
+  content: "✓";
   color: white;
 }
 
@@ -733,12 +733,12 @@ footer .container {
   cursor: pointer;
 }
 
-#show-ratings-btn{
+#show-ratings-btn {
   width: 100%;
   height: 100%;
 }
 
-.scoreboard{
+.scoreboard {
   margin-left: auto !important;
   margin-right: auto !important;
   width: 70%;

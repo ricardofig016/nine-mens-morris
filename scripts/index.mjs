@@ -3,9 +3,8 @@ import Settings from "./sections/settings.mjs";
 import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
 import Board from "./sections/board.mjs";
-import Toast from "./toast.mjs";
 import { initializeInstructionsModal } from "./instructions.mjs";
-import error from "./error.mjs";
+import AutoPlayer from "./game/autoplayer.mjs";
 
 const sections = {
   about: About,
@@ -20,6 +19,7 @@ const config = {
   player1: "Alice",
   player2: "Bob",
   shufflePlayers: true,
+  autoPlayer: false,
 };
 
 // show this section on page load
@@ -28,25 +28,27 @@ const defaultSection = new Home();
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
   Object.keys(sections).forEach((key) => {
-    document.getElementById(`to-${key}-button`).addEventListener("click", () => {
+    const button = document.getElementById(`to-${key}-button`);
+    if (!button) return;
+    button.addEventListener("click", () => {
       if (key === "board") new sections[key]().load(config);
       else new sections[key]().load();
     });
+  });
+
+  document.getElementById("settings-form").addEventListener("submit", (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    config.autoPlayer = formData.get("player-mode") === "nohuman";
+    config.level = formData.get("level");
+    // config.shufflePlayers = formData.get("shufflePlayers") === "true";
+    new Board().load(config);
   });
 
   defaultSection.load();
 
   initializeInstructionsModal();
   initializeScoreboardModal();
-
-  
-
-  /*// example of how to use the error function
-  error("This is an error message");
-
-  // example of how to manually create toasts
-  const toast = new Toast("This is a toast message");
-  toast.show();*/
 });
 
 export function showScoreboard() {

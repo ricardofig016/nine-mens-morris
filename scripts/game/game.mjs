@@ -1,6 +1,6 @@
 import Player from "./player.mjs";
 import Piece from "./piece.mjs";
-import AutoPlayer from "./autoplayer.mjs"
+import AutoPlayer from "./autoplayer.mjs";
 import levels from "./levels.mjs";
 import millCheckOffsets from "./millCheckOffsets.mjs";
 import error from "../error.mjs";
@@ -116,7 +116,6 @@ class Game {
   }
 
   // private methods
-  
 
   #flipTurn() {
     var place = new Audio("./assets/audio/piece-placement.mp3");
@@ -124,12 +123,11 @@ class Game {
     if (this.turn) {
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
-      document.getElementById("whoisplaying2").innerHTML = "Player 2's turn";
-      
+      document.getElementById("whoisplaying2").innerHTML = this.players[1] + "'s turn";
     } else {
       document.getElementById("whoisplaying").classList.remove("dark");
       document.getElementById("whoisplaying").classList.add("clear");
-      document.getElementById("whoisplaying2").innerHTML = "Player 1's turn";
+      document.getElementById("whoisplaying2").innerHTML = this.players[0] + "'s turn";
       place.play();
     }
   }

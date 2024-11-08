@@ -12,10 +12,10 @@ class Board extends Section {
     Board.instance = this;
   }
 
-  load({ level, player1, player2, shufflePlayers }) {
+  load({ level, player1, player2, shufflePlayers, autoPlayer }) {
     super.load();
     const game = new Game(level, player1, player2, shufflePlayers);
-    this.autoPlayer = new AutoPlayer(game); // Initialize AutoPlayer
+    if (autoPlayer) this.autoPlayer = new AutoPlayer(game);
     this.render(game);
     this.addListeners(game);
   }
@@ -33,13 +33,13 @@ class Board extends Section {
           const colorClass = cell.piece ? (cell.piece.symbol === "X" ? "clear" : "dark") : "empty";
           const isPickedUpClass = game.pickedUpPiece && game.pickedUpPiece.coords[0] === i && game.pickedUpPiece.coords[1] === j ? "picked-up" : "";
           cellElement.className = `cell ${colorClass} ${gridAreaClass} ${isPickedUpClass}`;
-          boardElement.appendChild(cellElement); 
-        } else{
-          const cellElement=document.createElement("span");
-          if(j===0 || j===6) cellElement.className = "vline";
-          else if((i===0 || i==6) && (j>0 && j<6)) cellElement.className = "hline";
-          else if((i===1 || i==5) && (j>1 && j<5)) cellElement.className = "hline";
-          else if((i===2 || i==4) && (j===1 || j===5)) cellElement.className = "vline";
+          boardElement.appendChild(cellElement);
+        } else {
+          const cellElement = document.createElement("span");
+          if (j === 0 || j === 6) cellElement.className = "vline";
+          else if ((i === 0 || i == 6) && j > 0 && j < 6) cellElement.className = "hline";
+          else if ((i === 1 || i == 5) && j > 1 && j < 5) cellElement.className = "hline";
+          else if ((i === 2 || i == 4) && (j === 1 || j === 5)) cellElement.className = "vline";
           // debug else cellElement.innerHTML=`i: ${i} / j: ${j}`
           boardElement.appendChild(cellElement);
         }
@@ -50,14 +50,13 @@ class Board extends Section {
   }
 
   gameEnd(result) {
-    if(result=="X"){
+    if (result == "X") {
       error("Player 1 Won!");
-      document.getElementById("scoring").innerHTML+="<tr><td>9 Men's Morris</td><td>Player 1</td><td>00:00:00</td></tr>"
-    }else{
+      document.getElementById("scoring").innerHTML += "<tr><td>9 Men's Morris</td><td>Player 1</td><td>00:00:00</td></tr>";
+    } else {
       error("Player 2 Won!");
-      document.getElementById("scoring").innerHTML+="<tr><td>9 Men's Morris</td><td>Player 2</td><td>00:00:00</td></tr>"
+      document.getElementById("scoring").innerHTML += "<tr><td>9 Men's Morris</td><td>Player 2</td><td>00:00:00</td></tr>";
     }
-    
   }
 
   addListeners(game) {
@@ -67,20 +66,20 @@ class Board extends Section {
       const target = event.target;
       if (!target.classList.contains("cell")) return;
       const [i, j] = this.getCellCoordinates(target);
-  
+
       if (game.grid[i][j].piece && game.phase !== "placing") {
         if (game.phase === "moving") game.pickUp(i, j);
         else if (game.phase === "taking") game.take(i, j);
       } else {
         game.place(i, j);
       }
-  
+
       this.render(game);
-  
+
       // Check if it's Bob's turn
-      if (game.players[game.turn].username === "Bob") {
+      if (game.players[game.turn].username === "Bob" && this.autoPlayer) {
         boardElement.disabled = true;
-  
+
         // Let AutoPlayer handle retries internally
         setTimeout(() => {
           this.autoPlayer.playRandomMove(); // Bob plays, with retries handled in AutoPlayer
@@ -90,8 +89,6 @@ class Board extends Section {
       }
     });
   }
-  
-  
 
   getCellCoordinates(cellElement) {
     const classList = Array.from(cellElement.classList);
