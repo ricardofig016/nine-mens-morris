@@ -124,6 +124,7 @@ class Game {
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
       document.getElementById("whoisplaying2").innerHTML = this.players[1] + "'s turn";
+      place.play();
     } else {
       document.getElementById("whoisplaying").classList.remove("dark");
       document.getElementById("whoisplaying").classList.add("clear");

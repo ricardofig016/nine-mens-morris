@@ -36,11 +36,17 @@ class Board extends Section {
           boardElement.appendChild(cellElement);
         } else {
           const cellElement = document.createElement("span");
-          if (j === 0 || j === 6) cellElement.className = "vline";
-          else if ((i === 0 || i == 6) && j > 0 && j < 6) cellElement.className = "hline";
-          else if ((i === 1 || i == 5) && j > 1 && j < 5) cellElement.className = "hline";
-          else if ((i === 2 || i == 4) && (j === 1 || j === 5)) cellElement.className = "vline";
-          // debug else cellElement.innerHTML=`i: ${i} / j: ${j}`
+          if(game.size>=7){
+            if (j === 0 || j === 6) cellElement.className = "vline";
+            else if ((i === 0 || i == 6) && j > 0 && j < 6) cellElement.className = "hline";
+            else if ((i === 1 || i == 5) && j > 1 && j < 5) cellElement.className = "hline";
+            else if ((i === 2 || i == 4) && (j === 1 || j === 5)) cellElement.className = "vline";
+          }
+          else{
+            if(j === 1 || j === 3) cellElement.className = "hline";
+            if(j === 0 || j === 4) cellElement.className = "vline";
+          } 
+          
           boardElement.appendChild(cellElement);
         }
       });
