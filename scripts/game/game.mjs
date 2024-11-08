@@ -123,12 +123,12 @@ class Game {
     if (this.turn) {
       document.getElementById("whoisplaying").classList.remove("clear");
       document.getElementById("whoisplaying").classList.add("dark");
-      document.getElementById("whoisplaying2").innerHTML = this.players[1] + "'s turn";
+      document.getElementById("whoisplaying2").innerHTML = this.players[1];
       place.play();
     } else {
       document.getElementById("whoisplaying").classList.remove("dark");
       document.getElementById("whoisplaying").classList.add("clear");
-      document.getElementById("whoisplaying2").innerHTML = this.players[0] + "'s turn";
+      document.getElementById("whoisplaying2").innerHTML = this.players[0];
       place.play();
     }
   }
