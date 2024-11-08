@@ -10,6 +10,7 @@ class Board extends Section {
     }
     super("board");
     Board.instance = this;
+    this.isAutoPlaying = false;
   }
 
   load({ level, player1, player2, shufflePlayers, autoPlayer }) {
@@ -84,14 +85,15 @@ class Board extends Section {
 
       // Check if it's Bob's turn
       if (game.players[game.turn].username === "Bob" && this.autoPlayer) {
+        this.isAutoPlaying = true;
         boardElement.disabled = true;
 
-        // Let AutoPlayer handle retries internally
         setTimeout(() => {
-          this.autoPlayer.playRandomMove(); // Bob plays, with retries handled in AutoPlayer
-          this.render(game); // Re-render after Bob’s move
+          this.autoPlayer.playRandomMove(); // AutoPlayer plays
+          this.render(game);
+          this.isAutoPlaying = false;
           boardElement.disabled = false;
-        }, 500); // Initial delay for Bob's turn
+        }, 500);
       }
     });
   }
@@ -105,4 +107,5 @@ class Board extends Section {
   }
 }
 
-export default Board;
+const board = new Board();
+export default board;

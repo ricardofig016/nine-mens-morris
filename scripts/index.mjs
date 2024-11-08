@@ -2,7 +2,7 @@ import About from "./sections/about.mjs";
 import Settings from "./sections/settings.mjs";
 import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
-import Board from "./sections/board.mjs";
+import board from "./sections/board.mjs";
 import { initializeInstructionsModal } from "./instructions.mjs";
 import AutoPlayer from "./game/autoplayer.mjs";
 
@@ -11,7 +11,7 @@ const sections = {
   settings: Settings,
   login: Login,
   home: Home,
-  board: Board,
+  board, 
 };
 
 const config = {
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
     config.autoPlayer = formData.get("player-mode") === "nohuman";
     config.level = formData.get("level");
     // config.shufflePlayers = formData.get("shufflePlayers") === "true";
-    new Board().load(config);
+    board.load(config);
   });
 
   defaultSection.load();
