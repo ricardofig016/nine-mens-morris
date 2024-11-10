@@ -24,7 +24,7 @@ class AutoPlayer {
     }
 
     if (!actionCompleted) {
-      error("Autoplayer needs some help completing the task"); // debug
+      console.log("Autoplayer needs some help completing the task."); // debug
     }
   }
 
