@@ -7,13 +7,13 @@ class AutoPlayer {
 
   playRandomMove() {
     console.log("- autoplay -");
-    const maxRetries = 10; // Limit the number of retries to avoid infinite loops
+    const maxRetries = 100; // Limit the number of retries to avoid infinite loops
     let attempts = 0;
     let actionCompleted = false;
 
     while (!actionCompleted && attempts < maxRetries) {
       attempts++;
-      
+
       if (this.game.phase === "placing") {
         actionCompleted = this.#placeRandomPiece();
       } else if (this.game.phase === "moving") {
@@ -31,7 +31,7 @@ class AutoPlayer {
   #placeRandomPiece() {
     let availableCells = this.#getRelevantEmptyCells();
     if (availableCells.length > 0) {
-      let [i, j] = this.#randomChoice(availableCells);   
+      let [i, j] = this.#randomChoice(availableCells);
       return this.game.place(i, j);
     }
     return false; // No available cells to place
@@ -45,7 +45,7 @@ class AutoPlayer {
         let moveOptions = this.#getRelevantEmptyCells();
         if (moveOptions.length > 0) {
           let [i, j] = this.#randomChoice(moveOptions);
-          return  this.game.place(i, j);
+          return this.game.place(i, j);
         }
       }
     }

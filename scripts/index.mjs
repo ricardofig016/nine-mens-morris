@@ -4,7 +4,6 @@ import Home from "./sections/home.mjs";
 import Login from "./sections/login.mjs";
 import Board from "./sections/board.mjs";
 import { initializeInstructionsModal } from "./instructions.mjs";
-import AutoPlayer from "./game/autoplayer.mjs";
 
 const sections = {
   about: About,

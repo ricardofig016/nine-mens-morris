@@ -16,13 +16,19 @@ class Board extends Section {
     super.load();
     const game = new Game(level, player1, player2, shufflePlayers);
     if (autoPlayer) this.autoPlayer = new AutoPlayer(game);
+    else this.autoPlayer = null;
+    const boardElement = document.getElementById("board");
+    const newBoardElement = document.createElement("div");
+    newBoardElement.id = "board";
+    newBoardElement.className = game.level;
+    boardElement.parentNode.insertBefore(newBoardElement, boardElement.nextSibling);
+    boardElement.remove();
     this.render(game);
     this.addListeners(game);
   }
 
   render(game) {
     const boardElement = document.getElementById("board");
-    boardElement.className = game.level;
     boardElement.innerHTML = "";
 
     game.grid.forEach((row, i) => {
@@ -47,6 +53,15 @@ class Board extends Section {
     });
     if (game.result) this.gameEnd(game.result);
     game.print(true);
+
+    if (game.players[game.turn].username === "Bob" && this.autoPlayer) {
+      boardElement.disabled = true;
+      setTimeout(() => {
+        this.autoPlayer.playRandomMove();
+        this.render(game);
+        boardElement.disabled = false;
+      }, 500);
+    }
   }
 
   gameEnd(result) {
@@ -75,18 +90,6 @@ class Board extends Section {
       }
 
       this.render(game);
-
-      // Check if it's Bob's turn
-      if (game.players[game.turn].username === "Bob" && this.autoPlayer) {
-        boardElement.disabled = true;
-
-        // Let AutoPlayer handle retries internally
-        setTimeout(() => {
-          this.autoPlayer.playRandomMove(); // Bob plays, with retries handled in AutoPlayer
-          this.render(game); // Re-render after Bob’s move
-          boardElement.disabled = false;
-        }, 500); // Initial delay for Bob's turn
-      }
     });
   }
 
