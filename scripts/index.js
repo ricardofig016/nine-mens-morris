@@ -1,9 +1,9 @@
-import About from "./sections/about.mjs";
-import Settings from "./sections/settings.mjs";
-import Home from "./sections/home.mjs";
-import Login from "./sections/login.mjs";
-import board from "./sections/board.mjs";
-import { initializeInstructionsModal } from "./instructions.mjs";
+import About from "./sections/about.js";
+import Settings from "./sections/settings.js";
+import Home from "./sections/home.js";
+import Login from "./sections/login.js";
+import board from "./sections/board.js";
+import { initializeInstructionsModal } from "./instructions.js";
 
 const sections = {
   about: About,

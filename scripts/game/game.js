@@ -1,9 +1,9 @@
-import Player from "./player.mjs";
-import Piece from "./piece.mjs";
-import AutoPlayer from "./autoplayer.mjs";
-import levels from "./levels.mjs";
-import millCheckOffsets from "./millCheckOffsets.mjs";
-import error from "../error.mjs";
+import Player from "./player.js";
+import Piece from "./piece.js";
+import AutoPlayer from "./autoplayer.js";
+import levels from "./levels.js";
+import millCheckOffsets from "./millCheckOffsets.js";
+import error from "../error.js";
 
 class Game {
   /**

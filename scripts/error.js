@@ -1,5 +1,5 @@
-import Toast from "./toast.mjs";
-import Board from "./sections/board.mjs";
+import Toast from "./toast.js";
+import Board from "./sections/board.js";
 
 function error(message) {
   console.log("Board autoPlayer:", Board.autoPlayer);

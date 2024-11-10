@@ -1,6 +1,6 @@
-import Section from "./section.mjs";
-import Home from "./home.mjs";
-import Login from "./login.mjs";
+import Section from "./section.js";
+import Home from "./home.js";
+import Login from "./login.js";
 
 class Signup extends Section {
   constructor() {

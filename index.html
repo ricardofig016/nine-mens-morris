@@ -6,7 +6,7 @@
     <link rel="icon" type="image/png" sizes="32x32" href="./assets/main-logo.png" />
     <title>Nine Men's Morris</title>
     <link rel="stylesheet" href="./styles.css" />
-    <script src="./scripts/index.mjs" type="module" defer></script>
+    <script src="./scripts/index.js" type="module"></script>
   </head>
   <body>
     <header>
@@ -152,14 +152,14 @@
           <p>You're an inch away from starting :)</p>
           <div class="player-box clear">
             <label class="custom-checkbox">
-              <input type="radio" id="9mm" checked="true" disabled />
+              <input type="radio" id="9mm"  checked disabled />
               <span class="checkmark"></span>
               9 Men's Morris
             </label>
           </div>
           <div class="player-box clear">
             <label class="custom-checkbox">
-              <input type="radio" value="human" name="player-mode" checked="true" />
+              <input type="radio" value="human" name="player-mode"  checked/>
               <span class="checkmark"></span>
               Play with a friend
             </label>
@@ -181,7 +181,7 @@
               Small
             </label>
             <label class="custom-checkbox">
-              <input type="radio" value="normal" name="level" checked="true" />
+              <input type="radio" value="normal" name="level" checked/>
               <span class="checkmark"></span>
               Normal
             </label>
@@ -207,7 +207,7 @@
         <tr>
           <th>
             <div class="player-box clear">
-              <span id="whoisplaying2">See the score table</span>
+              <span>See the score table</span>
               <button type="button" class="btn-sm btn-primary active" id="show-ratings-btn">Show player scores</button>
             </div>
           </th>
@@ -217,7 +217,7 @@
         <div class="modal-content scoreboard">
           <span id="ratings-close-modal-btn" class="btn-primary header-btn close-btn">&times;</span>
           <h2>Score Board</h2>
-          <table class="scoreboard player-box" class="player-box" id="scoring">
+          <table class="scoreboard player-box" id="scoring">
             <tr>
               <th>Game</th>
               <th>Who won?</th>

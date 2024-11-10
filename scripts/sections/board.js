@@ -1,7 +1,7 @@
-import Section from "./section.mjs";
-import Game from "../game/game.mjs";
-import AutoPlayer from "../game/autoplayer.mjs";
-import error from "../error.mjs";
+import Section from "./section.js";
+import Game from "../game/game.js";
+import AutoPlayer from "../game/autoplayer.js";
+import error from "../error.js";
 
 class Board extends Section {
   constructor() {

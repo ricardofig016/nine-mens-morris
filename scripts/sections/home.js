@@ -1,4 +1,4 @@
-import Section from "./section.mjs";
+import Section from "./section.js";
 
 class Home extends Section {
   constructor() {
