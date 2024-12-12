@@ -81,42 +81,37 @@ export function initializeScoreboardModal() {
 /*
 const http = require('http');
 const url = require('url');
-const { register, ranking, join, leave, notify, update } = require('./routes'); // Import all routes
+
+const register = require('./routes/register');
+const ranking = require('./routes/ranking');
+const join = require('./routes/join');
+const leave = require('./routes/leave');
+const notify = require('./routes/notify');
+const update = require('./routes/update');
 
 const PORT = 8008;
 
+const routes = {
+    '/register': register,
+    '/ranking': ranking,
+    '/join': join,
+    '/leave': leave,
+    '/notify': notify,
+    '/update': update,
+};
+
 const server = http.createServer((req, res) => {
-    const parsedUrl = url.parse(req.url, true); // Parse URL for queries
+    const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
 
-    const routes = {
-        '/register': register,
-        '/ranking': ranking,
-        '/join': join,
-        '/leave': leave,
-        '/notify': notify,
-        '/update': update,
-    };
-
     if (routes[pathname]) {
-        if (req.method === 'POST' && pathname !== '/update') {
-            // POST Routes
+        if (req.method === 'POST' || req.method === 'GET') {
             let body = '';
-            req.on('data', chunk => {
-                body += chunk;
-            });
+            req.on('data', chunk => body += chunk);
             req.on('end', () => {
-                try {
-                    const parsedBody = JSON.parse(body);
-                    routes[pathname](req, res, { ...parsedUrl.query, ...parsedBody });
-                } catch (err) {
-                    res.statusCode = 400;
-                    res.end(JSON.stringify({ error: 'Invalid JSON' }));
-                }
+                const data = body ? JSON.parse(body) : parsedUrl.query;
+                routes[pathname](req, res, data);
             });
-        } else if (req.method === 'GET' && pathname === '/update') {
-            // GET Route for update
-            routes[pathname](req, res, parsedUrl.query);
         } else {
             res.statusCode = 405;
             res.end(JSON.stringify({ error: 'Method not allowed' }));
@@ -125,6 +120,9 @@ const server = http.createServer((req, res) => {
         res.statusCode = 404;
         res.end(JSON.stringify({ error: 'Unknown endpoint' }));
     }
+});
+
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
 
 server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
