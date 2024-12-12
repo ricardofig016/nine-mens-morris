@@ -79,33 +79,55 @@ export function initializeScoreboardModal() {
 }
 
 /*
+const http = require('http');
+const url = require('url');
+const { register, ranking, join, leave, notify, update } = require('./routes'); // Import all routes
+
+const PORT = 8008;
+
 const server = http.createServer((req, res) => {
-    const parsedUrl = url.parse(req.url, true);
+    const parsedUrl = url.parse(req.url, true); // Parse URL for queries
     const pathname = parsedUrl.pathname;
 
-    if (req.method === 'POST') {
-        switch (pathname) {
-            case '/register':
-                register(req, res, parsedUrl.query);
-                break;
-            case '/ranking':
-                ranking(req, res, parsedUrl.query);
-                break;
-            case '/join':
-                join(req, res, parsedUrl.query);
-                break;
-            // Add additional cases for leave, notify, update
-            default:
-                res.statusCode = 404;
-                res.end(JSON.stringify({ error: 'Unknown endpoint' }));
+    const routes = {
+        '/register': register,
+        '/ranking': ranking,
+        '/join': join,
+        '/leave': leave,
+        '/notify': notify,
+        '/update': update,
+    };
+
+    if (routes[pathname]) {
+        if (req.method === 'POST' && pathname !== '/update') {
+            // POST Routes
+            let body = '';
+            req.on('data', chunk => {
+                body += chunk;
+            });
+            req.on('end', () => {
+                try {
+                    const parsedBody = JSON.parse(body);
+                    routes[pathname](req, res, { ...parsedUrl.query, ...parsedBody });
+                } catch (err) {
+                    res.statusCode = 400;
+                    res.end(JSON.stringify({ error: 'Invalid JSON' }));
+                }
+            });
+        } else if (req.method === 'GET' && pathname === '/update') {
+            // GET Route for update
+            routes[pathname](req, res, parsedUrl.query);
+        } else {
+            res.statusCode = 405;
+            res.end(JSON.stringify({ error: 'Method not allowed' }));
         }
     } else {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ error: 'Invalid method' }));
+        res.statusCode = 404;
+        res.end(JSON.stringify({ error: 'Unknown endpoint' }));
     }
 });
 
-server.listen(8000, () => console.log('Server running on port 8000'));
+server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
 */
 
 //O Prof disse para eu usar as cenas dos slides (o que está abaixo):
