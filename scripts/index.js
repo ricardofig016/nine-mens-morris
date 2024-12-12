@@ -107,3 +107,44 @@ const server = http.createServer((req, res) => {
 
 server.listen(8000, () => console.log('Server running on port 8000'));
 */
+
+//O Prof disse para eu usar as cenas dos slides (o que está abaixo):
+/*
+http.createServer(function (request, response) {
+    const preq = url.parse(request.url,true);
+    const pathname = preq.pathname;
+    let answer = {};
+
+    switch(request.method) {
+    case 'GET':
+        answer = doGet(pathname,request,response);
+        break;
+    case 'POST':
+        answer = doPost(pathname);
+        break;
+    default:
+        answer.status = 400;
+    }
+…
+}).listen(PORT);
+
+function doPost(pathname) {
+ let answer = {};
+
+ switch(pathname) {
+  case '/incr':
+   counter.incr();
+   updater.update(counter.get());
+   break;
+  case '/reset':
+   counter.reset();
+   updater.update(counter.get());
+    break;
+  default:
+    answer.status = 400;
+    break;
+  }
+
+ return answer;
+}
+*/
