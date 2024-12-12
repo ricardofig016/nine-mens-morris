@@ -77,3 +77,33 @@ export function initializeScoreboardModal() {
   }
   window.addEventListener("click", closeOnOutsideClick);
 }
+
+/*
+const server = http.createServer((req, res) => {
+    const parsedUrl = url.parse(req.url, true);
+    const pathname = parsedUrl.pathname;
+
+    if (req.method === 'POST') {
+        switch (pathname) {
+            case '/register':
+                register(req, res, parsedUrl.query);
+                break;
+            case '/ranking':
+                ranking(req, res, parsedUrl.query);
+                break;
+            case '/join':
+                join(req, res, parsedUrl.query);
+                break;
+            // Add additional cases for leave, notify, update
+            default:
+                res.statusCode = 404;
+                res.end(JSON.stringify({ error: 'Unknown endpoint' }));
+        }
+    } else {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ error: 'Invalid method' }));
+    }
+});
+
+server.listen(8000, () => console.log('Server running on port 8000'));
+*/
