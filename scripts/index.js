@@ -23,6 +23,8 @@ const config = {
 
 // show this section on page load
 const defaultSection = new Home();
+// const BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
+var BASE_URL = "http://localhost:8008";
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
@@ -77,3 +79,13 @@ export function initializeScoreboardModal() {
   }
   window.addEventListener("click", closeOnOutsideClick);
 }
+
+export function changeurl(){
+  if(BASE_URL === "http://localhost:8008"){
+    BASE_URL="http://twserver.alunos.dcc.fc.up.pt:8008";
+  }else{
+    BASE_URL = "http://localhost:8008";
+  }
+  console.log("changed url")
+}
+document.getElementById("comment").addEventListener("change", changeurl);

@@ -1,4 +1,3 @@
-const BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
 // Function to handle register request
 async function registerUser(nick, password) {
