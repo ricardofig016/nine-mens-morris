@@ -6,13 +6,7 @@ const ranking = (req, res, { group, size }) => {
     return res.end(JSON.stringify({ error: "Missing group or size" }));
   }
 
-  let rankings = [];
-  try {
-    rankings = JSON.parse(fs.readFileSync("./data/ranking.json", "utf-8"));
-  } catch (error) {
-    console.log("Error reading ranking.json");
-  }
-
+  const rankings = JSON.parse(fs.readFileSync("./data/ranking.json", "utf-8") || "[]");
   const filteredRankings = rankings
     .filter((r) => r.group == group && r.size == size)
     .sort((a, b) => b.victories - a.victories)
