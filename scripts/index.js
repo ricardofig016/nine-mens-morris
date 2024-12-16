@@ -3,6 +3,7 @@ import Settings from "./sections/settings.js";
 import Home from "./sections/home.js";
 import Login from "./sections/login.js";
 import board from "./sections/board.js";
+import { registerUser, joinGame } from "./twserver-alunos/communication.js";
 import { initializeInstructionsModal } from "./instructions.js";
 
 const sections = {
@@ -23,8 +24,7 @@ const config = {
 
 // show this section on page load
 const defaultSection = new Home();
-// const BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
-var BASE_URL = "http://localhost:8008";
+export var BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
@@ -89,3 +89,10 @@ export function changeurl(){
   console.log("changed url")
 }
 document.getElementById("comment").addEventListener("change", changeurl);
+
+document.getElementById("login-button").addEventListener("click", async () => {
+  const username = document.getElementById("username-input-login").value;
+  const password = document.getElementById("password-input-login").value;
+  await registerUser(username, password);
+  //await joinGame("group1", username, password, 3);
+});

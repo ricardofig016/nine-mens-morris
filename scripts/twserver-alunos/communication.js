@@ -1,6 +1,7 @@
-
+import { BASE_URL } from "../index.js";
+import error from "../error.js";
 // Function to handle register request
-async function registerUser(nick, password) {
+export async function registerUser(nick, password) {
   const response = await fetch(`${BASE_URL}/register`, {
     method: "POST",
     headers: {
@@ -12,12 +13,12 @@ async function registerUser(nick, password) {
   if (data.error) {
     console.error("Error registering user:", data.error);
   } else {
-    console.log("User registered successfully");
+    error("User registered successfully");
   }
 }
 
 // Function to handle join request
-async function joinGame(group, nick, password, size) {
+export async function joinGame(group, nick, password, size) {
   const response = await fetch(`${BASE_URL}/join`, {
     method: "POST",
     headers: {
@@ -29,12 +30,12 @@ async function joinGame(group, nick, password, size) {
   if (data.error) {
     console.error("Error joining game:", data.error);
   } else {
-    console.log("Joined game successfully. Game ID:", data.game);
+    error("Joined game successfully. Game ID:", data.game);
   }
 }
 
 // Function to leave the game
-async function leaveGame(nick, password, game) {
+export async function leaveGame(nick, password, game) {
   const response = await fetch(`${BASE_URL}/leave`, {
     method: "POST",
     headers: {
@@ -46,12 +47,12 @@ async function leaveGame(nick, password, game) {
   if (data.error) {
     console.error("Error leaving game:", data.error);
   } else {
-    console.log("Left game successfully");
+    error("Left game successfully");
   }
 }
 
 // Function to notify a move to the server
-async function notifyMove(nick, password, game, cell) {
+export async function notifyMove(nick, password, game, cell) {
   const response = await fetch(`${BASE_URL}/notify`, {
     method: "POST",
     headers: {
@@ -63,12 +64,12 @@ async function notifyMove(nick, password, game, cell) {
   if (data.error) {
     console.error("Error notifying move:", data.error);
   } else {
-    console.log("Move notified successfully");
+    error("Move notified successfully");
   }
 }
 
 // Function to update game state
-async function updateGameState(nick, game) {
+export async function updateGameState(nick, game) {
   const response = await fetch(`${BASE_URL}/update?nick=${nick}&game=${game}`, {
     method: "GET",
   });
@@ -76,23 +77,23 @@ async function updateGameState(nick, game) {
   if (data.error) {
     console.error("Error updating game state:", data.error);
   } else {
-    console.log("Game state updated:", data);
+    error("Game state updated:", data);
   }
 }
 
 // Function to fetch the game ranking
-async function getRanking(group, size) {
+export async function getRanking(group, size) {
   const response = await fetch(`${BASE_URL}/ranking?group=${group}&size=${size}`);
   const data = await response.json();
   if (data.error) {
     console.error("Error fetching ranking:", data.error);
   } else {
-    console.log("Game Ranking:", data.ranking);
+    error("Game Ranking:", data.ranking);
   }
 }
 
 // Function to simulate a move
-async function makeMove(nick, password, game, square, position) {
+export async function makeMove(nick, password, game, square, position) {
   const cell = { square, position };
   await notifyMove(nick, password, game, cell);
 }

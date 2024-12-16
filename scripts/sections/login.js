@@ -36,7 +36,7 @@ class Login extends Section {
       new Home().load();
     });
     // go to sign up
-    document.getElementById("go-to-signup-anchor").addEventListener("click", () => new Signup().load());
+    //document.getElementById("go-to-signup-anchor").addEventListener("click", () => new Signup().load());
   }
 }
 
