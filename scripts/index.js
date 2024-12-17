@@ -14,14 +14,6 @@ const sections = {
   board, 
 };
 
-const config = {
-  level: "normal",
-  player1: "Alice",
-  player2: "Bob",
-  shufflePlayers: true,
-  autoPlayer: false,
-};
-
 // show this section on page load
 const defaultSection = new Home();
 export var BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
@@ -94,7 +86,11 @@ document.getElementById("settings-form").addEventListener("submit", async (event
   event.preventDefault();
   const groupid = document.getElementById("groupid").value;
   const formData = new FormData(event.target);
-  config.autoPlayer = formData.get("player-mode") === "nohuman";
+  let config={
+    username: username,
+    password: password,
+    gameId: gameUniqueId
+  };
   config.level = formData.get("level");
   let size = 3; // Default size
   if (config.level === "mini") size = 3;
@@ -102,6 +98,7 @@ document.getElementById("settings-form").addEventListener("submit", async (event
   else if (config.level === "normal") size = 9;
   else size = 12;
   gameUniqueId=await joinGame(groupid, username, password, size);
+  config.gameId=gameUniqueId;
   console.log(gameUniqueId);
   board.load(config);
 });

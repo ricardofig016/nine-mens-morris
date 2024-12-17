@@ -74,16 +74,25 @@ export async function notifyMove(nick, password, game, cell) {
 
 // Function to update game state
 export async function updateGameState(nick, game) {
-  const response = await fetch(`${BASE_URL}/update?nick=${nick}&game=${game}`, {
-    method: "GET",
-  });
-  const data = await response.json();
-  if (data.error) {
-    error(`Error updating game state: ${data.error}`);
-  } else {
-    error("Game state updated: ${data}");
+  try {
+    const response = await fetch(`${BASE_URL}/update?nick=${nick}&game=${game}`, {
+      method: "GET",
+    });
+
+    const data = await response.json();
+
+    if (data.error) {
+      throw new Error(`Error updating game state: ${data.error}`);
+    }
+
+    console.log("Game state successfully updated:", data);
+    return data;
+  } catch (err) {
+    console.error(`Failed to update game state: ${err.message}`);
+    return null;
   }
 }
+
 
 // Function to fetch the game ranking
 export async function getRanking(group, size) {
