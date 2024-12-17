@@ -1,0 +1,2 @@
+- This folder is the node server developed by our gropup (14) and installed in twserver.
+- Provided here for backup purposes
