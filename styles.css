@@ -801,3 +801,10 @@ input:checked + .slider:before {
   padding-left: 25px;
   padding-right: 25px;
 }
+
+.waiting-message {
+  font-size: 1.5em;
+  color: #555;
+  text-align: center;
+  margin-top: 20px;
+}

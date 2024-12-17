@@ -19,7 +19,7 @@ const defaultSection = new Home();
 export var BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
 var username="";
 var password="";
-var gameUniqueId=""
+var gameUniqueId="";
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
@@ -92,7 +92,7 @@ document.getElementById("settings-form").addEventListener("submit", async (event
     gameId: gameUniqueId
   };
   config.level = formData.get("level");
-  let size = 3; // Default size
+  let size = 3;
   if (config.level === "mini") size = 3;
   else if (config.level === "small") size = 6;
   else if (config.level === "normal") size = 9;
