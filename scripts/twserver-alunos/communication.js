@@ -12,7 +12,7 @@ export async function registerUser(nick, password) {
   });
   const data = await response.json();
   if (data.error) {
-    error("Error registering user:", data.error);
+    error(`Error registering user ${data.error}`);
   } else {
     error("User registered successfully");
   }
@@ -29,11 +29,11 @@ export async function joinGame(group, nick, password, size) {
   });
   const data = await response.json();
   if (data.error) {
-    error("Error joining game:", data.error);
+    error(`Error joining game: ${data.error}`);
     return null;
 
   } else {
-    error("Joined game successfully. Game ID:", data.game);
+    error(`Joined game successfully. Game ID: ${data.game}`);
     return data.game;
   }
 }
@@ -49,7 +49,7 @@ export async function leaveGame(nick, password, game) {
   });
   const data = await response.json();
   if (data.error) {
-    error("Error leaving game:", data.error);
+    error(`Error leaving game: ${data.error}`);
   } else {
     error("Left game successfully");
   }
@@ -66,7 +66,7 @@ export async function notifyMove(nick, password, game, cell) {
   });
   const data = await response.json();
   if (data.error) {
-    error("Error notifying move:", data.error);
+    error(`Error notifying move: ${data.error}`);
   } else {
     error("Move notified successfully");
   }
@@ -79,9 +79,9 @@ export async function updateGameState(nick, game) {
   });
   const data = await response.json();
   if (data.error) {
-    error("Error updating game state:", data.error);
+    error(`Error updating game state: ${data.error}`);
   } else {
-    error("Game state updated:", data);
+    error("Game state updated: ${data}");
   }
 }
 
@@ -90,9 +90,9 @@ export async function getRanking(group, size) {
   const response = await fetch(`${BASE_URL}/ranking?group=${group}&size=${size}`);
   const data = await response.json();
   if (data.error) {
-    error("Error fetching ranking:", data.error);
+    error(`Error fetching ranking: ${data.error}`);
   } else {
-    error("Game Ranking:", data.ranking);
+    error("Game Ranking: ${data.ranking}");
   }
 }
 
