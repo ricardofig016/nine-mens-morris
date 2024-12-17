@@ -7,9 +7,9 @@ function error(message) {
     return false;
   }
 
-  const audio = new Audio("./assets/audio/wrong-choice.wav");
+  //const audio = new Audio("./assets/audio/wrong-choice.wav");
   const toast = new Toast(message);
-  audio.play();
+  //audio.play();
   toast.show();
 }
 

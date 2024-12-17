@@ -163,25 +163,17 @@
             </label>
           </div>
           <div class="player-box clear">
-            <label class="custom-checkbox">
-              <input type="radio" value="human" name="player-mode"  checked/>
-              <span class="checkmark"></span>
-              Play with a friend
-            </label>
-            <label class="custom-checkbox">
-              <input type="radio" value="nohuman" name="player-mode" />
-              <span class="checkmark"></span>
-              Play with the computer
-            </label>
+            <p>Group 14</p>
+            <input type="hidden" value="14" id="groupid">
           </div>
           <div class="player-box clear">
             <label class="custom-checkbox">
-              <input type="radio" value="mini" name="level" />
+              <input type="radio" value="mini" name="level"/>
               <span class="checkmark"></span>
               Mini
             </label>
             <label class="custom-checkbox">
-              <input type="radio" value="small" name="level" />
+              <input type="radio" value="small" name="level"/>
               <span class="checkmark"></span>
               Small
             </label>
@@ -191,13 +183,13 @@
               Normal
             </label>
             <label class="custom-checkbox">
-              <input type="radio" value="big" name="level" />
+              <input type="radio" value="big" name="level"/>
               <span class="checkmark"></span>
               Big
             </label>
           </div>
           <br />
-          <button type="submit" class="btn-primary header-btn">Let's Go!</button>
+          <button type="submit" id="letsplay" class="btn-primary header-btn">Let's Go!</button>
         </form>
       </div>
     </section>
@@ -215,7 +207,12 @@
               <span>See the score table</span>
               <button type="button" class="btn-sm btn-primary active" id="show-ratings-btn">Show player scores</button>
             </div>
+            <div class="player-box clear">
+              <span>Abandon the Match</span>
+              <button type="button" class="btn-sm btn-primary active" id="abandon-game">Quit Game</button>
+            </div>
           </th>
+
         </tr>
       </table>
       <div id="ratings-modal" class="modal">

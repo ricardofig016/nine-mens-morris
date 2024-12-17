@@ -3,7 +3,7 @@ import Settings from "./sections/settings.js";
 import Home from "./sections/home.js";
 import Login from "./sections/login.js";
 import board from "./sections/board.js";
-import { registerUser, joinGame } from "./twserver-alunos/communication.js";
+import { registerUser, joinGame, leaveGame } from "./twserver-alunos/communication.js";
 import { initializeInstructionsModal } from "./instructions.js";
 
 const sections = {
@@ -25,6 +25,9 @@ const config = {
 // show this section on page load
 const defaultSection = new Home();
 export var BASE_URL = "http://twserver.alunos.dcc.fc.up.pt:8008";
+var username="";
+var password="";
+var gameUniqueId=""
 
 document.addEventListener("DOMContentLoaded", () => {
   // add listeners for the nav buttons
@@ -35,15 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
       if (key === "board") new sections[key]().load(config);
       else new sections[key]().load();
     });
-  });
-
-  document.getElementById("settings-form").addEventListener("submit", (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    config.autoPlayer = formData.get("player-mode") === "nohuman";
-    config.level = formData.get("level");
-    // config.shufflePlayers = formData.get("shufflePlayers") === "true";
-    board.load(config);
   });
 
   defaultSection.load();
@@ -91,8 +85,28 @@ export function changeurl(){
 document.getElementById("comment").addEventListener("change", changeurl);
 
 document.getElementById("login-button").addEventListener("click", async () => {
-  const username = document.getElementById("username-input-login").value;
-  const password = document.getElementById("password-input-login").value;
+  username = document.getElementById("username-input-login").value;
+  password = document.getElementById("password-input-login").value;
   await registerUser(username, password);
-  //await joinGame("group1", username, password, 3);
+});
+
+document.getElementById("settings-form").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const groupid = document.getElementById("groupid").value;
+  const formData = new FormData(event.target);
+  config.autoPlayer = formData.get("player-mode") === "nohuman";
+  config.level = formData.get("level");
+  let size = 3; // Default size
+  if (config.level === "mini") size = 3;
+  else if (config.level === "small") size = 6;
+  else if (config.level === "normal") size = 9;
+  else size = 12;
+  gameUniqueId=await joinGame(groupid, username, password, size);
+  console.log(gameUniqueId);
+  board.load(config);
+});
+
+document.getElementById("abandon-game").addEventListener("click", async () => {
+  await leaveGame(username, password,gameUniqueId);
+  document.getElementById("to-home-button").click();
 });
