@@ -119,22 +119,25 @@ class Board extends Section {
     const ctx = canvas.getContext('2d');
     let radius = 20;
     let growing = true;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.beginPath();
-    ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
-    ctx.fillStyle = '#F4BE69';
-    ctx.fill();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = 'black';
-    ctx.stroke();
-    if (growing) {
-      radius += 1;
-      if (radius >= 50) growing = false;
-    } else {
-      radius -= 1;
-      if (radius <= 20) growing = true;
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+      ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+      ctx.fillStyle = '#F4BE69';
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = 'black';
+      ctx.stroke();
+      if (growing) {
+        radius += 1;
+        if (radius >= 50) growing = false;
+      } else {
+        radius -= 1;
+        if (radius <= 20) growing = true;
+      }
+      requestAnimationFrame(draw);
     }
-    requestAnimationFrame(draw);
+    draw();
   }
 
   /**

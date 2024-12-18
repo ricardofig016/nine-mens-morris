@@ -1,12 +1,15 @@
+// Main server script
+// This script was installed to the 'twserver' with adjusted paths to the required modules
+
 const http = require("http");
 const url = require("url");
 
-const register = require("./register");
-const ranking = require("./ranking");
-const join = require("./join");
-const leave = require("./leave");
-const notify = require("./notify");
-const update = require("./update");
+const register = require("./server/register");
+const ranking = require("./server/ranking");
+const join = require("./server/join");
+const leave = require("./server/leave");
+const notify = require("./server/notify");
+const update = require("./server/update");
 
 const PORT = 8114;
 
