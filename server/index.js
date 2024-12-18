@@ -23,6 +23,17 @@ const server = http.createServer((req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathname = parsedUrl.pathname;
 
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*"); 
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS"); 
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type"); 
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204); // No Content
+    res.end();
+    return;
+  }
+
   if (routes[pathname]) {
     if (req.method === "POST" || req.method === "GET") {
       let body = "";

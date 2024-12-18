@@ -20,7 +20,7 @@ class Board extends Section {
   }
 
   /**
-   * Load and initialize a game board.
+   * Load and initialize a game board
    */
   async load({ username, password, gameId, size }) {
     super.load();
@@ -34,7 +34,7 @@ class Board extends Section {
   }
 
   /**
-   * Fetch the latest game state and render the board.
+   * Fetch the latest game state and render the board
    */
   async updateAndRender() {
     console.log("updateAndRender")
@@ -68,10 +68,12 @@ class Board extends Section {
   }
 
   /**
-   * Render the board and game state.
+   * Render the board and game state
    */
   renderBoard() {
     const boardElement = document.getElementById("board");
+    const boardElement2 = document.getElementById("whoisplaying2");
+    const boardElement3 = document.getElementById("whatisplaying");
     boardElement.innerHTML = "";
 
     this.grid.forEach((row, i) => {
@@ -83,12 +85,12 @@ class Board extends Section {
       });
     });
 
-    document.getElementById("game-phase").textContent = `Phase: ${this.phase}`;
-    document.getElementById("game-turn").textContent = `Turn: ${this.turn}`;
+    boardElement3.innerHTML = `Phase: ${this.phase}`;
+    boardElement2.innerHTML = `Turn: ${this.turn}`;
   }
 
   /**
-   * Handle player's move.
+   * Handle player's move
    */
   async makeMove(row, col) {
     try {
@@ -101,17 +103,42 @@ class Board extends Section {
   }
 
   /**
-   * Render a waiting message for unpaired games.
+   * Render a waiting message for unpaired games
    */
   renderWaitingMessage() {
     const boardElement2 = document.getElementById("whoisplaying2");
-    const boardElement = document.getElementById("whatisplaying");
+    const boardElement3 = document.getElementById("whatisplaying");
     boardElement2.innerHTML = "Waiting for another player...";
-    boardElement.innerHTML = "Waiting";
+    boardElement3.innerHTML = "Waiting";
+    const boardElement = document.getElementById('board');
+    boardElement.innerHTML="";
+    const canvas = document.createElement('canvas');
+    canvas.width = boardElement.clientWidth;
+    canvas.height = boardElement.clientHeight;
+    boardElement.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    let radius = 20;
+    let growing = true;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+    ctx.fillStyle = '#F4BE69';
+    ctx.fill();
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'black';
+    ctx.stroke();
+    if (growing) {
+      radius += 1;
+      if (radius >= 50) growing = false;
+    } else {
+      radius -= 1;
+      if (radius <= 20) growing = true;
+    }
+    requestAnimationFrame(draw);
   }
 
   /**
-   * Return the CSS class for a cell.
+   * Return the CSS class for a cell
    */
   getCellClass(cellContent) {
     if (cellContent === "empty") return "empty";
@@ -121,7 +148,7 @@ class Board extends Section {
   }
 
   /**
-   * Clean up when leaving the board.
+   * Clean up when leaving the board
    */
   unload() {
     if (this.intervalId) clearInterval(this.intervalId);

@@ -48,7 +48,7 @@
       </div>
       <div class="server-selector player-box">
         <p><b>Communication Server</b></p>
-        <p>Professor&nbsp;&nbsp;-&nbsp;&nbsp;Students</p>
+        <p>Professor (8008)&nbsp;-&nbsp;Students (8114)</p>
         <label for="comment" class="switch">
           <input id="comment" type="checkbox">
           <span class="slider round"></span>
@@ -165,6 +165,31 @@
           <div class="player-box clear">
             <p>Group 14</p>
             <input type="hidden" value="14" id="groupid">
+          </div>
+          <div class="player-box clear">
+            <label class="custom-checkbox">
+              <input type="radio" value="local" name="mode" id="localplayers"/>
+              <span class="checkmark"></span>
+              Local
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="multi" name="mode" checked/>
+              <span class="checkmark"></span>
+              Multiplayer
+            </label>
+          </div>
+          <div class="player-box clear">
+            <p>Local-only Settings</p>
+            <label class="custom-checkbox">
+              <input type="radio" value="human" name="player-mode"  checked/>
+              <span class="checkmark"></span>
+              Play with a friend
+            </label>
+            <label class="custom-checkbox">
+              <input type="radio" value="nohuman" name="player-mode" />
+              <span class="checkmark"></span>
+              Play with the computer
+            </label>
           </div>
           <div class="player-box clear">
             <label class="custom-checkbox">

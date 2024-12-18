@@ -1,2 +1,2 @@
-- This folder is the node server developed by our gropup (14) and installed in twserver.
+- This folder is the node server developed by our group (14) and installed in twserver.
 - This code is also provided in the submission.

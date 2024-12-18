@@ -1,0 +1,23 @@
+[
+    {
+      "group": 14,
+      "size": 9,
+      "nick": "joao",
+      "games": 25,
+      "victories": 10
+    },
+    {
+      "group": 14,
+      "size": 9,
+      "nick": "miguel",
+      "games": 22,
+      "victories": 7
+    },
+    {
+      "group": 14,
+      "size": 9,
+      "nick": "manuel",
+      "games": 20,
+      "victories": 2
+    }
+]
