@@ -1,5 +1,5 @@
 import { BASE_URL } from "../index.js";
-import error from "../error.js";
+import say from "../say.js";
 
 // Function to handle register request
 export async function registerUser(nick, password) {
@@ -12,9 +12,9 @@ export async function registerUser(nick, password) {
   });
   const data = await response.json();
   if (data.error) {
-    error(`Error registering user ${data.error}`);
+    say(`Error registering user: ${data.error}`);
   } else {
-    error("User registered successfully");
+    say("User registered successfully");
   }
 }
 
@@ -29,11 +29,11 @@ export async function joinGame(group, nick, password, size) {
   });
   const data = await response.json();
   if (data.error) {
-    error(`Error joining game: ${data.error}`);
+    say(`Error joining game: ${data.error}`);
     return null;
 
   } else {
-    error(`Joined game successfully. Game ID: ${data.game}`);
+    say(`Joined game successfully. Game ID: ${data.game}`);
     return data.game;
   }
 }
@@ -49,9 +49,9 @@ export async function leaveGame(nick, password, game) {
   });
   const data = await response.json();
   if (data.error) {
-    error(`Error leaving game: ${data.error}`);
+    say(`Error leaving game: ${data.error}`);
   } else {
-    error("Left game successfully");
+    say("Left game successfully");
   }
 }
 
@@ -66,9 +66,9 @@ export async function notifyMove(nick, password, game, cell) {
   });
   const data = await response.json();
   if (data.error) {
-    error(`Error notifying move: ${data.error}`);
+    say(`Error notifying move: ${data.error}`);
   } else {
-    error("Move notified successfully");
+    say("Move notified successfully");
   }
 }
 
@@ -81,14 +81,9 @@ export async function updateGameState(nick, game) {
 
     const data = await response.json();
 
-    if (data.error) {
-      throw new Error(`Error updating game state: ${data.error}`);
-    }
-
     console.log("Game state successfully updated:", data);
     return data;
   } catch (err) {
-    console.error(`Failed to update game state: ${err.message}`);
     return null;
   }
 }
@@ -96,13 +91,19 @@ export async function updateGameState(nick, game) {
 
 // Function to fetch the game ranking
 export async function getRanking(group, size) {
-  const response = await fetch(`${BASE_URL}/ranking?group=${group}&size=${size}`);
+  const response = await fetch(`${BASE_URL}/ranking`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ group,size })
+  });
   const data = await response.json();
   if (data.error) {
-    error(`Error fetching ranking: ${data.error}`);
-  } else {
-    error("Game Ranking: ${data.ranking}");
+    say(`Error fetching ranking: ${data.error}`);
+    throw new Error(data.error);
   }
+  return data;
 }
 
 // Function to simulate a move
@@ -110,37 +111,3 @@ export async function makeMove(nick, password, game, square, position) {
   const cell = { square, position };
   await notifyMove(nick, password, game, cell);
 }
-
-/* // Example of usage
-async function playGame() {
-  const group = 99;
-  const nick1 = "zp";
-  const nick2 = "jpleal";
-  const password1 = "secret";
-  const password2 = "another";
-  const size = 3;
-
-  // Register users (if needed)
-  await registerUser(nick1, password1);
-  await registerUser(nick2, password2);
-
-  // Join game
-  await joinGame(group, nick1, password1, size);
-  await joinGame(group, nick2, password2, size);
-
-  // Update game state
-  const gameId = "fa93b40";  // Example game ID, should be returned by joinGame
-  await updateGameState(nick1, gameId);
-  
-  // Notify move
-  await makeMove(nick1, password1, gameId, 0, 0);  // Example move
-
-  // Get ranking
-  await getRanking(group, size);
-
-  // Leave game
-  await leaveGame(nick1, password1, gameId);
-  await leaveGame(nick2, password2, gameId);
-}
-
-playGame();*/

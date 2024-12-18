@@ -8,7 +8,7 @@ const leave = require("./leave");
 const notify = require("./notify");
 const update = require("./update");
 
-const PORT = 8008;
+const PORT = 8114;
 
 const routes = {
   "/register": register,
@@ -41,4 +41,4 @@ const server = http.createServer((req, res) => {
   }
 });
 
-server.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+server.listen(PORT, () => console.log(`Server running on ${PORT}`));
